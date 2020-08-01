@@ -105,6 +105,67 @@ class Automata:
             token.inFormation = True 
             token.type = "Greater than operator"
 
+        
+        # Apertura de parentesis
+        elif(
+            not token.inFormation and
+            self.verify.isOpenParenthesis ( char )
+        ):
+            token.add( char )
+            token.formed = True
+            token.inFormation = False
+            token.type = "Open parenthesis"
+        
+        # Cierre de parentesis
+        elif(
+            not token.inFormation and
+            self.verify.isCloseParenthesis ( char )
+        ):
+            token.add( char )
+            token.formed = True
+            token.inFormation = False
+            token.type = "Close parenthesis"
+
+        # Apertura de Llave
+        elif(
+            not token.inFormation and
+            self.verify.isOpenCurlyBrace ( char )
+        ):
+            token.add( char )
+            token.formed = True
+            token.inFormation = False
+            token.type = "Open Curly Brace"
+        
+        # Cierre de Llave
+        elif(
+            not token.inFormation and
+            self.verify.isCloseCurlyBrace ( char )
+        ):
+            token.add( char )
+            token.formed = True
+            token.inFormation = False
+            token.type = "Close Curly Brace"
+        
+        # Coma
+        elif(
+            not token.inFormation and
+            self.verify.isComma ( char )
+        ):
+            token.add( char )
+            token.formed = True
+            token.inFormation = False
+            token.type = "Comma"
+        
+        # Punto y coma
+        elif(
+            not token.inFormation and
+            self.verify.isSemicolon ( char )
+        ):
+            token.add( char )
+            token.formed = True
+            token.inFormation = False
+            token.type = "End of statement"
+
         elif( 
                 token.inFormation 
             ):
@@ -128,7 +189,13 @@ class Automata:
                     self.verify.isID( char )
                 ): 
                     token.add( char )
-                    
+
+                elif(
+                    self.verify.isAlphabet( token.atFirst() ) and 
+                    not self.verify.isID( char )
+                ):
+                    token.formed = True
+
                 # Flotante 
                 elif (
                     self.verify.isDigit( token.atFirst() ) and 
@@ -141,14 +208,14 @@ class Automata:
                 elif (
                     self.verify.isDigit( token.atFirst() )  and 
                     #not (self.verify.isLineBreak( char  ) or self.verify.whitespace( char ))
-                    not self.verify.isAllSpaceswhite( char )
+                    self.verify.isDigit( char ) 
                 ): 
                     token.add( char )
 
                 # Igualdad
                 elif(
                     self.verify.isAssignment( token.atFirst() ) and 
-                    not self.verify.isAllSpaceswhite( char )
+                    self.verify.isAssignment( char )
                 ): 
                     token.add( char )
                     token.type = "Equal operator"
@@ -163,19 +230,27 @@ class Automata:
 
                 # Mayor o igual
                 elif(
-                    self.verify.isGreaterThan( token.atFirst() ) and 
-                    not self.verify.isAllSpaceswhite( char )
+                    self.verify.isGreaterThan( token.atFirst() ) and
+                    self.verify.isAssignment( char ) 
+ 
                 ): 
                     token.add( char )
                     token.type = "Greater than or equal operator"
 
-                else: 
-                    if self.verify.isLineBreak(char): #Elimina espacios y saltos de linea
+                else:
+                    if(
+                        self.verify.isLineBreak( char ) and
+                        token.type == "User identifier"
+                    ):  
+                        token = self.verify.isKeyword(token)
+                    elif self.verify.isLineBreak(char): #Elimina tabulados y saltos de linea
                         token.inFormation = False 
-                    
-                    else: 
+                    else:
+                        pos -= 1
+                    """else: 
                         token.add( char )
-                    
+                    """
+
                     token.formed = True 
         else: 
             token = Token()
