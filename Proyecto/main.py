@@ -1,11 +1,10 @@
-# -*- coding:utf-8 -*-
+import sys, os
+sys.path.insert(0, os.getcwd() + '/lexical-analysis')
 
-from LexicalAutomata import LexicalAutomata
+from Automata import Automata
 from Reader import Reader
-import sys
 
-text = (Reader()).read()
-automata = LexicalAutomata(text).run()
+reader = (Reader()).reader()
+automata = (Automata(reader)).run()
 
-for i in automata.tokens:
-    print (i.info())
+[print( i.info() ) for i in automata.tokens ] 
