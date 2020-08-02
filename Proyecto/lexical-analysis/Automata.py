@@ -105,7 +105,41 @@ class Automata:
             token.inFormation = True 
             token.type = "Greater than operator"
 
-        
+        #-------NUEVO------
+        # Operador de multiplicación
+        elif(
+            not token.inFormation and
+            self.verify.isMultop ( char )
+        ):
+            token.add( char )
+            token.formed = True
+            token.inFormation = False
+            token.type = "Multiply operation"
+
+        #-------NUEVO------
+        # Operador de resta
+        elif(
+            not token.inFormation and
+            self.verify.isSubop ( char )
+        ):
+            token.add( char )
+            token.formed = True
+            token.inFormation = False
+            token.type = "Subtraction operation"
+
+
+        #-------NUEVO------
+        # Operador de suma
+        elif(
+            not token.inFormation and
+            self.verify.isSubop ( char )
+        ):
+            token.add( char )
+            token.formed = True
+            token.inFormation = False
+            token.type = "Subtraction operation"
+
+             
         # Apertura de parentesis
         elif(
             not token.inFormation and
@@ -115,6 +149,7 @@ class Automata:
             token.formed = True
             token.inFormation = False
             token.type = "Open parenthesis"
+
         
         # Cierre de parentesis
         elif(
@@ -195,6 +230,7 @@ class Automata:
                     not self.verify.isID( char )
                 ):
                     token.formed = True
+                    pos-=1 #NUEVO
 
                 # Flotante 
                 elif (
@@ -219,11 +255,12 @@ class Automata:
                 ): 
                     token.add( char )
                     token.type = "Equal operator"
+                    token.formed = True
 
                 # Menor o igual
                 elif(
                     self.verify.isLessThan( token.atFirst() ) and 
-                    not self.verify.isAllSpaceswhite( char )
+                    self.verify.isLessThan( char )  
                 ): 
                     token.add( char )
                     token.type = "Less than or equal operator"
@@ -243,10 +280,21 @@ class Automata:
                         token.type == "User identifier"
                     ):  
                         token = self.verify.isKeyword(token)
+
                     elif self.verify.isLineBreak(char): #Elimina tabulados y saltos de linea
                         token.inFormation = False 
+
+                    #-------NUEVO------
+                    elif (
+                        self.verify.isQuote( token.atFirst() ) and 
+                        self.verify.isQuote( char )
+                    ): 
+                        token.add( char )
+                        token.inFormation = True
+                    
                     else:
-                        pos -= 1
+                        #token.add( char )
+                        pos -= 1 #-------NUEVO------
                     """else: 
                         token.add( char )
                     """
@@ -255,6 +303,8 @@ class Automata:
         else: 
             token = Token()
         pos += 1
-        return (pos, token)
 
+        #print( token.info()[0] )
+
+        return (pos, token)
 
