@@ -30,7 +30,8 @@ class Verify:
     def isAlphabet(self, char): 
         return True if (
             (char >= 65 and char <= 90) or # Mayúsculas
-            (char >= 97 and char <= 122)   # Minúsculas
+            (char >= 97 and char <= 122) or  # Minúsculas
+            self.isDot (char)
         ) else False 
 
     # Espacio en blanco
@@ -135,6 +136,12 @@ class Verify:
             token.type = "for Keyword"
         elif typeInfo == "function":
             token.type = "function Keyword"
+        elif typeInfo == "return":
+            token.type = "return Keyword"
+        elif typeInfo == "console.log":
+            token.type = "Show console message"
+        elif typeInfo == "console.error":
+            token.type = "Show console error"
 
         return token
             

@@ -230,6 +230,7 @@ class Automata:
                     not self.verify.isID( char )
                 ):
                     token.formed = True
+                    token = self.verify.isKeyword(token) #-- Aquí puse la verificación -- NUEVO
                     pos-=1 #NUEVO
 
                 # Flotante 
@@ -260,7 +261,7 @@ class Automata:
                 # Menor o igual
                 elif(
                     self.verify.isLessThan( token.atFirst() ) and 
-                    self.verify.isLessThan( char )  
+                    self.verify.isAssignment( char )   
                 ): 
                     token.add( char )
                     token.type = "Less than or equal operator"
@@ -275,13 +276,9 @@ class Automata:
                     token.type = "Greater than or equal operator"
 
                 else:
-                    if(
-                        self.verify.isLineBreak( char ) and
-                        token.type == "User identifier"
-                    ):  
-                        token = self.verify.isKeyword(token)
+                    # Por aquí borre un if que no servia de nada :v
 
-                    elif self.verify.isLineBreak(char): #Elimina tabulados y saltos de linea
+                    if self.verify.isLineBreak(char): #Elimina tabulados y saltos de linea
                         token.inFormation = False 
 
                     #-------NUEVO------

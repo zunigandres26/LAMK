@@ -1,12 +1,17 @@
 Ejemplo 1
 
+
 function factorial(n){
 
     if (n==1) return 1;
 
-    if (n1>=10) return 0;
+    if (n<1) return 0;
 
     return n*factorial(n-1);
+
+}
+
+for (joderTio<=5){
 
 }
 
@@ -14,7 +19,9 @@ function factorial(n){
 
 console.log("El factorial de 5 es: ", factorial(n));
 
-Ejemplo 20000000000000
+
+Ejemplo 2
+
 
 function isInStock(n,m){
 
