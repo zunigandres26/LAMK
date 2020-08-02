@@ -132,12 +132,23 @@ class Automata:
         # Operador de suma
         elif(
             not token.inFormation and
-            self.verify.isSubop ( char )
+            self.verify.isSummop ( char )
         ):
             token.add( char )
             token.formed = True
             token.inFormation = False
-            token.type = "Subtraction operation"
+            token.type = "Addition operation"
+
+        #-------NUEVO------
+        # Operador de División
+        elif(
+            not token.inFormation and
+            self.verify.isDivideop ( char )
+        ):
+            token.add( char )
+            token.formed = True
+            token.inFormation = False
+            token.type = "Divide operation"
 
              
         # Apertura de parentesis
@@ -281,10 +292,20 @@ class Automata:
                     if self.verify.isLineBreak(char): #Elimina tabulados y saltos de linea
                         token.inFormation = False 
 
-                    #-------NUEVO------
-                    elif (
+                    #-------NUEVO------ 
+                    #comilla doble al final
+                    elif ( 
                         self.verify.isQuote( token.atFirst() ) and 
                         self.verify.isQuote( char )
+                    ): 
+                        token.add( char )
+                        token.inFormation = True
+
+                    #-------NUEVO------ 
+                    #comilla simple al final
+                    elif (
+                        self.verify.isQuoteSimple( token.atFirst() ) and 
+                        self.verify.isQuoteSimple( char )
                     ): 
                         token.add( char )
                         token.inFormation = True
@@ -292,16 +313,10 @@ class Automata:
                     else:
                         #token.add( char )
                         pos -= 1 #-------NUEVO------
-                    """else: 
-                        token.add( char )
-                    """
 
                     token.formed = True 
         else: 
             token = Token()
         pos += 1
 
-        #print( token.info()[0] )
-
         return (pos, token)
-
