@@ -1,26 +1,22 @@
-Ejemplo 1
 
 
 function factorial(n){
 
     if (n==1) return 1;
 
-    if (n<1) return 0;
+    if (n1>=10) return 0;
 
     return n*factorial(n-1);
 
 }
 
-for (joderTio<=5){
-
-}
+if (n==3) return 3;
+if (n==5) return 5;
 
    
 
-console.log("El factorial de 5 es: ", factorial(n));
+console.log('El factorial de 5 es: ', factorial(n));
 
-
-Ejemplo 2
 
 
 function isInStock(n,m){
@@ -31,7 +27,7 @@ function isInStock(n,m){
 
         console.log("Hay en Stock!");
 
-    }else{
+
 
            
 
@@ -40,6 +36,26 @@ function isInStock(n,m){
     }
 
 }
+
+if (n<m){
+
+    if (n<m){
+
+    if (n<m){
+
+           
+
+        console.log("Hay en Stock!");
+
+    }      
+
+        console.log("Hay en Stock!");
+
+    }       
+
+        console.log("Hay en Stock!");
+
+    }
 
    
 
