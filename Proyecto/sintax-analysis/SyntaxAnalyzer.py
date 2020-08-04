@@ -10,6 +10,13 @@ class SyntaxAnalyzer:
         self.statements = []
 
     def run(self):
+        #self.verify.printRe()
+        """
+        -----------------------------------------------------
+        La linea 13 imprime una RE, y esta se escoge en la
+        clase Verify
+        ------------------------------------------------------
+        """ 
         lines = re.split(r"\n", self.text)
 
         firstLine = 0
@@ -32,7 +39,8 @@ class SyntaxAnalyzer:
                 self.statements += [ statement ]
             if(
                 statement.analyzed and
-                statement.type == "flow statement"
+                statement.type == "flow statement" and 
+                not self.verify.isOpenComment( statement.atFirst() )
             ):
                 firstLine = (i-len( statement.lines )) + 1
                 lastLine = (i-1)
@@ -40,12 +48,13 @@ class SyntaxAnalyzer:
                 """
                 -----------------------------------------------------
                 Si el analisis de la declaracion es correcto y esta
-                es un control de flujo entonces se procedera a
-                analizar las declaraciones que esta tenga adentro
+                es un control de flujo pero No un comentario de 
+                multiples lineas, entonces se procedera a analizar
+                las declaraciones que esta tenga adentro
                 ------------------------------------------------------
                 """
             if( 
-                i == (len( lines )-1) and
+                i == (len( lines )) and
                 not statement.forClose == 0
             
             ):
@@ -133,7 +142,7 @@ class SyntaxAnalyzer:
             if(
                 self.verify.isOpenFlow( statement.atFirst() ) and
                 not self.verify.isOpenFlow( line ) and
-                not self.verify.isCloseBracket( line )
+                not self.verify.isCloseFlow( line )
             ):
                 statement.add( line )
 
@@ -145,7 +154,7 @@ class SyntaxAnalyzer:
                 statement.forClose += 1
             elif(
                 self.verify.isOpenFlow( statement.atFirst() ) and
-                self.verify.isCloseBracket( line )
+                self.verify.isCloseFlow( line )
             ):
                 statement.add( line )
                 statement.forClose -= 1

@@ -49,8 +49,8 @@ class Verify:
         ).strip()
 
         #Open while statement
-        self.openWhile = ("\s*while\s*\(%s\)\s*{\s*".strip()
-                            % self.opCondicional
+        self.openWhile = ("\s*while\s*\((%s|\s*%s\s*)\)\s*{\s*".strip()
+                            % (self.opCondicional, self.boolean)
                         )
 
         #Open for statement
@@ -58,12 +58,24 @@ class Verify:
                             % (self.intAssignment, self.opCondicional, self.counters)
                         )
 
-        self.openFlow = ("(%s|%s|%s|%s)".strip() 
-            % (self.openFor, self.openFunction, self.openIf, self.openWhile)
+        #Open multiple comments
+        self.openMultipleComment = ("\s*\/\*\s*[^\/\*]*\s*")
+
+        #All the multiple line statements
+        self.openFlow = ("(%s|%s|%s|%s|%s)".strip() 
+            % (self.openFor, self.openFunction, self.openIf, self.openWhile, self.openMultipleComment)
                         )
 
         #Close Bracket
         self.closeBracket = "\s*}\s*"
+
+        #Close Comments
+        self.closeComment = "\s*[^\*\/]*\s*\*\/\s*"
+
+        #close flow
+        self.closeFlow = ("(%s|%s)".strip() 
+                    % (self.closeBracket, self.closeComment)
+                        ).strip()
 
         #Blank Space
         self.blank = "(\s|\t|\n)*"
@@ -90,10 +102,14 @@ class Verify:
         #return
         self.returnAll = "\s*return\s*[A-Za-z0-9\+\-\/\*\(\)\s]+\s*;?\s*"
 
+        #One Line Comment //
+        self.oneLineComment = "\s*\/\/\s*[^/]*\s*"
+
         #oneLineStatement
-        self.oneLineStatement = ("(%s|%s|%s|%s)".strip()
-        % (self.returnAll, self.assignment, self.callFunction, self.ifOneLine)
+        self.oneLineStatement = ("(%s|%s|%s|%s|%s)".strip()
+        % (self.returnAll, self.assignment, self.callFunction, self.ifOneLine, self.oneLineComment)
                         ).strip()
+
     
 
     def isOpenFunction(self, line):
@@ -101,6 +117,9 @@ class Verify:
 
     def isOpenFlow(self, line):
         return True if re.match("^%s$" % self.openFlow, line) else False
+
+    def isCloseFlow(self, line):
+        return True if re.match("^%s$" % self.closeFlow, line) else False
 
     def isOpenIf(self, line):
         return True if re.match("^%s$" % self.openIf, line) else False
@@ -110,7 +129,10 @@ class Verify:
 
     def isOpenFor(self, line):
         return True if re.match("^%s$" % self.openFor, line) else False
-    
+
+    def isOpenComment(self, line):
+        return True if re.match("^%s$" % self.openMultipleComment, line) else False
+
     def isCloseBracket(self, line):
         return True if re.match("^%s$" % self.closeBracket, line) else False
 
@@ -118,7 +140,7 @@ class Verify:
         return True if re.match("^%s$" % self.blank, line) else False
 
     def isOneLineStatement(self, line):
-        return True if re.match("^%s$" % self.oneLineStatement, line) else False    
+        return True if re.match("^%s$" % self.oneLineStatement, line) else False 
     
     def printRe(self):
-        print(self.oneLineStatement)
+        print(self.openWhile)
