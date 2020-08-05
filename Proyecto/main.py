@@ -1,8 +1,13 @@
 import sys, os
 sys.path.insert(0, os.getcwd() + '/lexical-analysis')
 sys.path.insert(0, os.getcwd() + '/sintax-analysis')
+sys.path.insert(0, os.getcwd() + '/semantic-analysis')
 
 from Automata import Automata
+import sys
+from Semantic import Semantic
+from lark import Lark,Transformer
+from Grammar import *
 from Reader import Reader
 from SyntaxAnalyzer import SyntaxAnalyzer
 
@@ -11,12 +16,22 @@ reader = (Reader()).reader()
 
 #[print( i.info() ) for i in automata.tokens ]
 
-sintactic = (SyntaxAnalyzer(reader).run())
+#sintactic = (SyntaxAnalyzer(reader).run())
 
-for i in sintactic.statements:
+"""for i in sintactic.statements:
     print()
     print("-"*50)
     print("%s encontrado" % i.type)
     print("-"*50)
     print(i.lines)
     print()
+"""
+
+parser = Lark(grammar,parser="lalr",transformer = Semantic())
+language = parser.parse
+
+sample = reader.text
+try:
+    language(sample)
+except Exception as e:
+    print ("Error: %s" % e)
