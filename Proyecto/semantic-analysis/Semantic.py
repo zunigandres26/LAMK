@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import re
+
+import re
 from lark import Transformer, v_args, Tree
 
 @v_args(inline=True)
@@ -62,9 +64,14 @@ class Semantic(Transformer):
         self.assignvar(name,value)
         condition = self.getValues(condition," ")
         unary = self.getUnary(self.getValues(unary," ")[-1].strip())
-        statements = [self.getValues(x,"#INDENT#") for x in args]
+        statements = [
+                        self.cleanDeclaration (
+                            self.getValues(x,"#INDENT#") 
+                        )
+                        for x in args
+                    ]
 
-        print(statements)
+        print( statements )
 
         if ((name == condition[1] or name == condition[3]) and 
             (condition[1] != condition[3])
@@ -97,14 +104,20 @@ class Semantic(Transformer):
             ):
                 self.repeatStatements(start+1,end,unary,statements)
 
+    
             
-    def repeatStatements(self,start,end,unary,statements):            
+    def repeatStatements(self,start,end,unary,statements):           
         for i in range(start,end,unary):
+            operation = self.assignOperation( statements[i] )
+            print( operation )
             for statement in statements:
                 if statement[1]=="log":
                     self.printlog(statement[-1])
                 elif statement[1] == "error":
                     self.printlog(statement[-1])
+
+    def assignOperation(self,  statements): 
+        return self.evalFunctionOperation( statements )  if "operation" in statements else 0
 
     def getUnary(self,unary):
         return 1 if unary=="++" else -1
@@ -125,3 +138,47 @@ class Semantic(Transformer):
         tree = tree.pretty(indent_str=indent).split(indent)
         tree = [x.strip() for x in tree]
         return tree
+
+    # Limpia un arreglo sustraido del árbol de Lark
+    def cleanDeclaration(self, arrayVarStatement ):
+        if 'operation' in arrayVarStatement: 
+            return self.cleanVarStatementDeclaration( arrayVarStatement )
+        else: 
+            return self.cleanForStatement( arrayVarStatement )
+
+    # Limpia el arreglo que contiene las operaciones 
+    # aritméticas
+    def cleanVarStatementDeclaration(self, arrayVarStatement ): 
+        newStatement =[]
+        for statement in arrayVarStatement: 
+            if statement != "operation" and statement != "":
+                if re.search(r"\t", statement):
+                    newStatement.append( statement[-1] )
+                else:
+                    newStatement.append( statement )
+        varStatement = arrayVarStatement[0:3]
+        op = newStatement[2:]
+        return varStatement + op
+
+    # true\ttrue --> true
+    def cleanForStatement(self, arrayVarStatement ): 
+        newStatement =[]
+        for statement in arrayVarStatement: 
+            if re.search(r"\t", statement):
+                newStatement.append( re.split(r"\t", statement)[-1] )
+            else: 
+                newStatement.append( statement )
+        return newStatement
+
+    # Evalua operaciones matemáticas
+    def evalFunctionOperation(self, arrayVarStatement):
+        op = arrayVarStatement[3:]
+        strOp = "".join( op )
+        
+        if re.search(r"[a-zA-Z]", strOp): 
+            for i in range(len(op)): 
+                if re.search(r"[a-zA-Z]+", op[i]): 
+                    op[i] = self.getvar( op[i] )
+            return eval( "".join( op ) )        
+        else: 
+            return eval( strOp )
