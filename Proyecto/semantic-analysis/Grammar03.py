@@ -6,9 +6,10 @@ grammar = """
     ?exp: print
         | assign
         | for_function
+        | if
 
     // ******************************************************************************
-    // Impresión
+    // Impresión en consola
     // ******************************************************************************
 
     ?print: "console" "." "log" "(" var ")" ";"? -> printvarlog
@@ -47,11 +48,11 @@ grammar = """
     // Ciclo For
     // ******************************************************************************
 
-    ?for_function: "for" "(" var "=" ar_operation ";" condition ";" unary ")" "{" forstatements* "}" -> forfunction
+    ?for_function: "for" "(" var "=" ar_operation ";" condition ";" unary ")" "{" statements* "}" -> forfunction
 
     ?unary: var unary_op
 
-    ?forstatements: log "(" var ")" ";"?
+    ?statements: log "(" var ")" ";"?
         | error "(" var ")" ";"?
         | log "(" string ")" ";"?
         | error "(" string ")" ";"?
@@ -89,7 +90,28 @@ grammar = """
         | />/
         | />=/
         | /<=/
+
+    // ******************************************************************************
+    // Condición If-Else
+    // ******************************************************************************
+
+    ?if: "if" "(" ifcondition ")" "{" statements* "}"
+        | "if" "(" ifcondition ")" "{" statements* "}" "else" "{" statements* "}"
+        | "if" "(" ifcondition ")" statements ";"? -> ifdeclaration
+
+    ?ifcondition: var if_com_operator number
+        | number if_com_operator var
+        | number if_com_operator number
+        | var if_com_operator var
         
+
+    ?if_com_operator: /</
+        | />/
+        | />=/
+        | /<=/
+        | /==/
+        | /!=/
+
     // ******************************************************************************
     // Terminales
     // ******************************************************************************

@@ -19,3 +19,5 @@ for (i=0;i<10;i++){
     g = 10 + i;
     console.log(g)
 }
+
+if (10<5) console.log("Te crees mejor que yo?");

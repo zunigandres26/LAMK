@@ -185,3 +185,11 @@ class Semantic(Transformer):
             return eval( "".join( op ) )        
         else: 
             return eval( strOp )
+
+    # Oh shit, here we go again
+
+    def ifdeclaration(self,condition,*args):
+        condition = self.getValues(condition," ")
+        print(condition)
+        statements = [self.getValues(x,"#INDENT#") for x in args]
+        print (statements)
