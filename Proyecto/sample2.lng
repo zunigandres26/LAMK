@@ -4,6 +4,7 @@ c = null
 d = true;
 e = false;
 z = 10+7*5-a/(70-67)
+g = 0;
 
 console.log(a)
 console.log(b)
@@ -18,5 +19,6 @@ for (i=0;i<10;i++){
     a = true;
     f = null
     v = "OKOKOKOOKOKOKO"
-    g = 10 + 5 * 10 + u
+    g = 10 + 5 * 10 + 25
+    console.log( g );
 }
