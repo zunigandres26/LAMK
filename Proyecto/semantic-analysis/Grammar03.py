@@ -64,8 +64,9 @@ grammar = """
         | var "=" operation ";"?
 
     ?operation: number
-        | operation operator number
-        | operation operator var
+        | operation operator operation
+        | var
+        | "(" operation ")"
 
     ?operator: plus 
         | minus

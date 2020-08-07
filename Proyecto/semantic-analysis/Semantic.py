@@ -190,6 +190,24 @@ class Semantic(Transformer):
 
     def ifdeclaration(self,condition,*args):
         condition = self.getValues(condition," ")
-        print(condition)
-        statements = [self.getValues(x,"#INDENT#") for x in args]
-        print (statements)
+        statements = [
+                        self.cleanDeclaration (
+                            self.getValues(x,"#INDENT#") 
+                        )
+                        for x in args
+                    ]
+        if (self.cleanIfDeclaration(condition)):
+            print(statements)
+
+    # Evalua los párametros de una declaración if
+    # retornando su valor de verdad
+    def cleanIfDeclaration(self, arrayVarStatement ): 
+        newStatement = self.cleanForStatement( arrayVarStatement )[1:]
+        strOp = "".join( newStatement )
+        if re.search(r"[a-zA-Z]\w*", strOp): 
+            for i in range(len( newStatement )): 
+                if re.search(r"[a-zA-Z]\w*", newStatement[i]): 
+                    newStatement[i] = self.getvar( newStatement[i] )
+            return eval( "".join(newStatement) )
+        else: 
+            return eval( strOp )
