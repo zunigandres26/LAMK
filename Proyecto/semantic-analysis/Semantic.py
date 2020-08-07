@@ -49,45 +49,73 @@ class Semantic(Transformer):
             self.printerror("Infinito chaval, como el universo")
 
     def assignvar(self,name,value):
-        self.variables[name] = value
+        if (str(type(value))=="<class 'lark.tree.Tree'>"):
+            self.variables[name] = value.data
+        else:
+            self.variables[name] = value
 
     def getvar(self,name):
         return self.variables[name]
 
     def forfunction(self, name, value,condition,unary, *args):
         
+        self.assignvar(name,value)
         condition = self.getValues(condition," ")
         unary = self.getUnary(self.getValues(unary," ")[-1].strip())
         statements = [self.getValues(x,"#INDENT#") for x in args]
-        start = int(value)
-        end = self.getEnd(condition)
-        """
+
+        print(statements)
+
         if ((name == condition[1] or name == condition[3]) and 
-            (condition[1] not condition[3]) and
-            (name == unary[1])
+            (condition[1] != condition[3])
         ):
             start = int(value)
-            end = self.getEnd(condition)
+            end = self.getEnd(condition,name)
 
-            for i in statements:
-        """
-        for i in range (start,end,unary):
+            # for (int i=0; i<10; i++)
+            # for (int i=10; i>0; i--)
+            # for (int i=0; 10>i; i++)
+            # for (int i=10; 0<i; i--)
+            if ((condition[1]==name and condition[2]=="<" and unary==1) or
+                (condition[1]==name and condition[2]==">" and unary== -1) or 
+                (condition[3]==name and condition[2]=="<" and unary== -1) or 
+                (condition[3]==name and condition[2]==">" and unary== 1)
+            ):
+                self.repeatStatements(start,end,unary,statements)
+            
+            # for (int i=0; i<=30; i++)
+            # for (int i=0; 30>=i; i++)
+            elif ((condition[1]==name and condition[2]=="<=" and unary== 1) or
+                (condition[3]==name and condition[2]==">=" and unary == 1)
+            ):
+                self.repeatStatements(start,end+1,unary,statements)
+
+            # for (int i=30; i>=0; i--)
+            # for (int i=30; 0<=i; i--)
+            elif ((condition[1]==name and condition[2]==">=" and unary== -1) or
+                (condition[3]==name and condition[2]=="<=" and unary== -1)
+            ):
+                self.repeatStatements(start+1,end,unary,statements)
+
+            
+    def repeatStatements(self,start,end,unary,statements):            
+        for i in range(start,end,unary):
             for statement in statements:
-                if (statement[1]=="log"):
+                if statement[1]=="log":
                     self.printlog(statement[-1])
-                elif (statement[1]=="error"):
-                    self.printerror(statement[-1])
+                elif statement[1] == "error":
+                    self.printlog(statement[-1])
 
     def getUnary(self,unary):
         return 1 if unary=="++" else -1
 
-    def getEnd (self,condition):
+    def getEnd (self,condition,name):
         end = 0
         if (re.match(r"\d+",condition[1])):
             end = int(condition[1])
         elif (re.match(r"\d+",condition[3])):
             end = int(condition[3])
-        elif (re.match(r"%" % name,condition[1])):
+        elif (re.match(r"%s" % name,condition[1])):
             end = self.getvar(condition[3])
         else:
             end = self.getvar(condition[1])

@@ -1,0 +1,22 @@
+a = 10;
+b = "MATADME PORFAVOR"
+c = null
+d = true;
+e = false;
+z = 10+7*5-a/(70-67)
+
+console.log(a)
+console.log(b)
+console.log(c)
+console.log(d)
+console.log(e)
+console.error(z)
+
+
+for (i=0;i<10;i++){
+    console.log("Maldición, Funciona!")
+    a = true;
+    f = null
+    v = "OKOKOKOOKOKOKO"
+    g = 10 + 5 * 10 + u
+}
