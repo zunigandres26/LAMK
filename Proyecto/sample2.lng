@@ -16,9 +16,6 @@ console.error(z)
 
 for (i=0;i<10;i++){
     console.log("Maldición, Funciona!")
-    a = true;
-    f = null
-    v = "OKOKOKOOKOKOKO"
-    g = 10 + 5 * 10 + 25
-    console.log( g );
+    g = 10 + i;
+    console.log(g)
 }

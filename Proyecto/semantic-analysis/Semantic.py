@@ -52,12 +52,12 @@ class Semantic(Transformer):
 
     def assignvar(self,name,value):
         if (str(type(value))=="<class 'lark.tree.Tree'>"):
-            self.variables[name] = value.data
+            self.variables[str(name)] = value.data
         else:
-            self.variables[name] = value
+            self.variables[str(name)] = value
 
     def getvar(self,name):
-        return self.variables[name]
+        return self.variables[str(name)]
 
     def forfunction(self, name, value,condition,unary, *args):
         
@@ -70,8 +70,6 @@ class Semantic(Transformer):
                         )
                         for x in args
                     ]
-
-        print( statements )
 
         if ((name == condition[1] or name == condition[3]) and 
             (condition[1] != condition[3])
@@ -88,33 +86,39 @@ class Semantic(Transformer):
                 (condition[3]==name and condition[2]=="<" and unary== -1) or 
                 (condition[3]==name and condition[2]==">" and unary== 1)
             ):
-                self.repeatStatements(start,end,unary,statements)
+                self.repeatStatements(name,start,end,unary,statements)
             
             # for (int i=0; i<=30; i++)
             # for (int i=0; 30>=i; i++)
             elif ((condition[1]==name and condition[2]=="<=" and unary== 1) or
                 (condition[3]==name and condition[2]==">=" and unary == 1)
             ):
-                self.repeatStatements(start,end+1,unary,statements)
+                self.repeatStatements(name,start,end+1,unary,statements)
 
             # for (int i=30; i>=0; i--)
             # for (int i=30; 0<=i; i--)
             elif ((condition[1]==name and condition[2]==">=" and unary== -1) or
                 (condition[3]==name and condition[2]=="<=" and unary== -1)
             ):
-                self.repeatStatements(start+1,end,unary,statements)
-
-    
-            
-    def repeatStatements(self,start,end,unary,statements):           
+                self.repeatStatements(name,start+1,end,unary,statements)
+   
+    def repeatStatements(self,name,start,end,unary,statements): 
         for i in range(start,end,unary):
-            operation = self.assignOperation( statements[i] )
-            print( operation )
             for statement in statements:
                 if statement[1]=="log":
-                    self.printlog(statement[-1])
+                    if(statement[-1] in self.variables):
+                        self.printvarlog(statement[-1])
+                    else:
+                        self.printlog(statement[-1])
                 elif statement[1] == "error":
-                    self.printlog(statement[-1])
+                    if(statement[-1] in self.variables):
+                        self.printvarerror(statement[-1])
+                    else:
+                        self.printerror(statement[-1])
+                elif statement[2] == "operation":
+                    self.assignvar(statement[1],self.assignOperation(statement))
+
+            self.assignvar(name,str(int(self.getvar(name))+unary))
 
     def assignOperation(self,  statements): 
         return self.evalFunctionOperation( statements )  if "operation" in statements else 0
@@ -174,10 +178,9 @@ class Semantic(Transformer):
     def evalFunctionOperation(self, arrayVarStatement):
         op = arrayVarStatement[3:]
         strOp = "".join( op )
-        
-        if re.search(r"[a-zA-Z]", strOp): 
+        if re.search(r"[a-zA-Z]\w*", strOp): 
             for i in range(len(op)): 
-                if re.search(r"[a-zA-Z]+", op[i]): 
+                if re.search(r"[a-zA-Z]\w*", op[i]): 
                     op[i] = self.getvar( op[i] )
             return eval( "".join( op ) )        
         else: 

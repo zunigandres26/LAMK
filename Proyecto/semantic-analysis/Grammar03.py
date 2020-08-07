@@ -51,8 +51,8 @@ grammar = """
 
     ?unary: var unary_op
 
-    ?forstatements: log "(" ar_operation ")" ";"?
-        | error "(" ar_operation ")" ";"?
+    ?forstatements: log "(" var ")" ";"?
+        | error "(" var ")" ";"?
         | log "(" string ")" ";"?
         | error "(" string ")" ";"?
         | varstatementdeclaration
