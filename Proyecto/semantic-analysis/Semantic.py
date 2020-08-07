@@ -186,7 +186,7 @@ class Semantic(Transformer):
         else: 
             return eval( strOp )
 
-    # Oh shit, here we go again
+    # Función If
 
     def ifdeclaration(self,condition,*args):
         condition = self.getValues(condition," ")
@@ -196,8 +196,21 @@ class Semantic(Transformer):
                         )
                         for x in args
                     ]
+        print(statements)
         if (self.cleanIfDeclaration(condition)):
-            print(statements)
+            for statement in statements:
+                if statement[1]=="log":
+                    if(statement[-1] in self.variables):
+                        self.printvarlog(statement[-1])
+                    else:
+                        self.printlog(statement[-1])
+                elif statement[1] == "error":
+                    if(statement[-1] in self.variables):
+                        self.printvarerror(statement[-1])
+                    else:
+                        self.printerror(statement[-1])
+                elif statement[2] == "operation":
+                    self.assignvar(statement[1],self.assignOperation(statement))
 
     # Evalua los párametros de una declaración if
     # retornando su valor de verdad

@@ -1,4 +1,4 @@
-a = 10;
+a = 11;
 b = "MATADME PORFAVOR"
 c = null
 d = true;
@@ -20,4 +20,10 @@ for (i=0;i<10;i++){
     console.log(g)
 }
 
-if (a==10) a=(10+30)-5/3*7;
+if (a>=10) {
+
+    a=10+(30-5)/3*7;
+    console.error(a)
+}else{
+    console.log("Joder")
+}

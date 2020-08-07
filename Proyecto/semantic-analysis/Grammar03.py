@@ -66,12 +66,16 @@ grammar = """
     ?operation: number
         | operation operator operation
         | var
-        | "(" operation ")"
+        | open_parenthesis operation close_parenthesis
 
     ?operator: plus 
         | minus
         | star
         | slash
+
+    !open_parenthesis: "("
+
+    !close_parenthesis: ")"
 
     !plus: "+"
     !minus: "-"
@@ -96,8 +100,8 @@ grammar = """
     // Condición If-Else
     // ******************************************************************************
 
-    ?if: "if" "(" ifcondition ")" "{" statements* "}"
-        | "if" "(" ifcondition ")" "{" statements* "}" "else" "{" statements* "}"
+    ?if: "if" "(" ifcondition ")" "{" statements* "}" -> ifdeclaration
+        | "if" "(" ifcondition ")" "{" statements* "}" else "{" statements* "}" ->ifdeclaration
         | "if" "(" ifcondition ")" statements ";"? -> ifdeclaration
 
     ?ifcondition: var if_com_operator number
@@ -105,13 +109,11 @@ grammar = """
         | number if_com_operator number
         | var if_com_operator var
         
-
-    ?if_com_operator: /</
-        | />/
-        | />=/
-        | /<=/
+    ?if_com_operator: com_operator
         | /==/
         | /!=/
+
+    !else: "else"
 
     // ******************************************************************************
     // Terminales
