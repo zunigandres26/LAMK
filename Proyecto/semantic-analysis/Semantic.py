@@ -104,20 +104,7 @@ class Semantic(Transformer):
    
     def repeatStatements(self,name,start,end,unary,statements): 
         for i in range(start,end,unary):
-            for statement in statements:
-                if statement[1]=="log":
-                    if(statement[-1] in self.variables):
-                        self.printvarlog(statement[-1])
-                    else:
-                        self.printlog(statement[-1])
-                elif statement[1] == "error":
-                    if(statement[-1] in self.variables):
-                        self.printvarerror(statement[-1])
-                    else:
-                        self.printerror(statement[-1])
-                elif statement[2] == "operation":
-                    self.assignvar(statement[1],self.assignOperation(statement))
-
+            self.avatarLaLeyendaDeAang(statements)
             self.assignvar(name,str(int(self.getvar(name))+unary))
 
     def assignOperation(self,  statements): 
@@ -155,7 +142,7 @@ class Semantic(Transformer):
     def cleanVarStatementDeclaration(self, arrayVarStatement ): 
         newStatement =[]
         for statement in arrayVarStatement: 
-            if statement != "operation" and statement != "":
+            if (statement != "operation" and statement != "") and (statement!="ifcondition"):
                 if re.search(r"\t", statement):
                     newStatement.append( statement[-1] )
                 else:
@@ -168,7 +155,9 @@ class Semantic(Transformer):
     def cleanForStatement(self, arrayVarStatement ): 
         newStatement =[]
         for statement in arrayVarStatement: 
-            if re.search(r"\t", statement):
+            if re.search(r"else\telse", statement):
+                return re.split(r"\t", statement)[-1]
+            elif re.search(r"\t", statement):
                 newStatement.append( re.split(r"\t", statement)[-1] )
             else: 
                 newStatement.append( statement )
@@ -186,6 +175,21 @@ class Semantic(Transformer):
         else: 
             return eval( strOp )
 
+    def avatarLaLeyendaDeAang(self,statements):
+        for statement in statements:
+            if statement[1]=="log":
+                if(statement[-1] in self.variables):
+                    self.printvarlog(statement[-1])
+                else:
+                    self.printlog(statement[-1])
+            elif statement[1] == "error":
+                if(statement[-1] in self.variables):
+                    self.printvarerror(statement[-1])
+                else:
+                    self.printerror(statement[-1])
+            elif statement[2] == "operation":
+                self.assignvar(statement[1],self.assignOperation(statement))
+
     # Función If
 
     def ifdeclaration(self,condition,*args):
@@ -196,21 +200,14 @@ class Semantic(Transformer):
                         )
                         for x in args
                     ]
-        print(statements)
+        elseIndex = self.cleanElseDeclaration(statements)
+
         if (self.cleanIfDeclaration(condition)):
-            for statement in statements:
-                if statement[1]=="log":
-                    if(statement[-1] in self.variables):
-                        self.printvarlog(statement[-1])
-                    else:
-                        self.printlog(statement[-1])
-                elif statement[1] == "error":
-                    if(statement[-1] in self.variables):
-                        self.printvarerror(statement[-1])
-                    else:
-                        self.printerror(statement[-1])
-                elif statement[2] == "operation":
-                    self.assignvar(statement[1],self.assignOperation(statement))
+            statements = statements[:elseIndex]
+            self.avatarLaLeyendaDeAang(statements)
+        elif (elseIndex is not 0):
+            statements = statements[elseIndex+1:]
+            self.avatarLaLeyendaDeAang(statements)
 
     # Evalua los párametros de una declaración if
     # retornando su valor de verdad
@@ -224,3 +221,24 @@ class Semantic(Transformer):
             return eval( "".join(newStatement) )
         else: 
             return eval( strOp )
+
+    #! Caso if else, pasando el arbol LARK completo
+    #! Esta wea elimina una posicion del arreglo
+    def cleanElseDeclaration(self, arrayVarStatement): 
+        for i in range(len(arrayVarStatement)):
+            if arrayVarStatement[i] == "else":
+                return i
+        return 0
+            
+    # Ciclo While
+
+    def while_loop(self,condition,*args):
+        if (str(type(condition))=="<class 'lark.tree.Tree'>"): 
+            condition = self.getValues(condition," ")
+            condition = [re.split(r"\t", x)[-1] for x in condition]
+            if (len(condition)>1):
+                condition = self.cleanIfDeclaration(condition)
+            else:
+                condition = bool(condition[0].title()
+        elif (str(type(condition))=="<class 'lark.lexer.Token'>"):
+            condition = self.getvar(condition).title()        

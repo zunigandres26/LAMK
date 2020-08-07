@@ -20,10 +20,16 @@ for (i=0;i<10;i++){
     console.log(g)
 }
 
-if (a>=10) {
-
+if (a<=10) {
     a=10+(30-5)/3*7;
     console.error(a)
 }else{
+    console.log("")
     console.log("Joder")
+}
+
+u=0
+while(u<10){
+    console.log("F")
+    u = u +1
 }
