@@ -188,7 +188,7 @@ class Semantic(Transformer):
                 else:
                     self.printerror(statement[-1])
             elif statement[2] == "operation":
-                self.assignvar(statement[1],self.assignOperation(statement))
+                self.assignvar(statement[1],str(self.assignOperation(statement)))
 
     # Función If
 
@@ -236,9 +236,36 @@ class Semantic(Transformer):
         if (str(type(condition))=="<class 'lark.tree.Tree'>"): 
             condition = self.getValues(condition," ")
             condition = [re.split(r"\t", x)[-1] for x in condition]
-            if (len(condition)>1):
-                condition = self.cleanIfDeclaration(condition)
-            else:
-                condition = bool(condition[0].title()
+            condition = self.getTextCondition(condition)
         elif (str(type(condition))=="<class 'lark.lexer.Token'>"):
-            condition = self.getvar(condition).title()        
+            condition = str(self.getvar(condition))
+
+        statements = [
+                        self.cleanDeclaration (
+                            self.getValues(x,"#INDENT#") 
+                        )
+                        for x in args
+                    ]
+
+        while (self.evalTextCondition(condition)):
+            self.avatarLaLeyendaDeAang(statements)  
+
+    def getTextCondition(self,condition):
+        if len(condition)>1:
+            return " ".join(condition[1:])
+        else:
+            return condition[0]
+
+    def evalTextCondition(self,condition):
+        condition = condition.split(" ")
+        for i in range(len(condition)):
+            if (re.match(r"true|false",condition[i])):
+                condition[i]= condition[i].title()
+            elif (re.match(r"[a-zA-Z]\w*",condition[i])):
+                condition[i] = str(self.getvar(condition[i]))
+                if (re.match(r"true|false",condition[i])):
+                    condition[i]=condition[i].title()
+                    
+        condition = " ".join(condition)
+        return bool(eval(condition))
+        

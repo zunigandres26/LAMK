@@ -2,7 +2,7 @@ a = 11;
 b = "MATADME PORFAVOR"
 c = null
 d = true;
-e = false;
+e = true;
 z = 10+7*5-a/(70-67)
 g = 0;
 
@@ -29,7 +29,8 @@ if (a<=10) {
 }
 
 u=0
-while(u<10){
-    console.log("F")
+
+while(e){
+    console.error("F")
     u = u +1
 }
