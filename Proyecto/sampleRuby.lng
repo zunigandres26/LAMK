@@ -1,0 +1,78 @@
+#---------------------------------------------------------
+#                Comentarios
+#---------------------------------------------------------
+
+# This is a single line comment.
+
+=begin
+This is a multiline comment.
+Write as many line as you want. 
+=end
+
+#---------------------------------------------------------
+#                Impresiones
+#---------------------------------------------------------
+
+puts "Hello World!"
+print "Hola mundo"
+
+#---------------------------------------------------------
+#                Asignaciones
+#---------------------------------------------------------
+
+s = 'Hello World!'  
+x = 10
+
+#---------------------------------------------------------
+#                funciones
+#---------------------------------------------------------
+
+def add_two(number)
+  #number = 2
+end
+
+add_two(3)
+
+def paint_text(text, color = "black")
+  # the same things above
+end
+
+#---------------------------------------------------------
+#                Flujo if
+#---------------------------------------------------------  
+
+
+if xyz > 4  
+  puts 'La variable xyz es mayor que 4'  
+  puts 'Puedo poner más instrucciones dentro del if'
+  if xyz == 5  
+    puts 'Se puede anidar un bloque if,else,end dentro de otro' 
+  #else  
+    puts "Parte del bloque anidado"  
+  end  
+#else  
+  puts 'La variable xyz no es mayor que 4'
+  puts 'También puedo poner múltiples sentencias' 
+end
+#---------------------------------------------------------
+#                Flujo for
+#---------------------------------------------------------
+
+for i in 0..5
+   puts "Value of local variable is #{i}"
+   for i in 0..5
+   puts "Value of local variable is #{i}"
+end
+end
+
+#----------------------------------------------
+
+
+#---------------------------------------------------------
+#                Flujo while
+#---------------------------------------------------------
+
+while i < num  do
+   puts "Inside the loop i = #$i" 
+   #$i +=1
+end

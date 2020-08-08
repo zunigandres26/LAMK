@@ -1,146 +1,117 @@
-import re
+
+from grammars.JSGrammar import *
+from grammars.BashGrammar import *
+from grammars.RubyGrammar import *
+
+import sys, re
 
 class Verify:
 
     def __init__(self):
-        #Variables
-        self.var = "[A-Za-z][A-Za-z0-9]*"
-
-        #Data Types
-        self.string = "(\"[^\"]*\"|'[^']*')"
-        self.number = "[0-9]+"
-        self.boolean = "(true|false)"
-
-        #Variables and Data Types
-        self.allDataTypes = ("(%s|%s|%s|%s)".strip() 
-            % (self.var, self.string, self.number, self.boolean)
-                            )
-
-        #Operators
-        self.operators = "==|>|>=|<|<="
-
-        #Counters
-        self.counters = ("%s\+\+|%s\-\-".strip() % (self.var, self.var))
-
-        #Conditional
-        self.opCondicional = ("\s*(%s|%s)\s*(%s)\s*(%s|%s)\s*".strip()
-                            % (self.var, self.number, self.operators, self.var, self.number)
-                        ).strip()
-
-        #var assignment
-        self.assignment = ("\s*%s\s*=\s*(%s|%s|%s|%s)\s*;?\s*".strip()
-                    % (self.var, self.number, self.string, self.var, self.boolean)
-                        )
-
-        #Integer Only Assignment
-        self.intAssignment = ("\s*%s\s*=\s*%s\s*".strip()
-                            % (self.var, self.number)
-                        )
-
-        #Open if Statement
-        self.openIf = ("\s*if\s*\(%s\)\\s*{\s*".strip() % self.opCondicional).strip()
-
-        #Params
-        self.params = ("\s*%s\s*\,?\s*(%s)?\s*" % (self.var, self.var))
-        
-        #Open function statement
-        self.openFunction = ("\s*function\s+%s\s*\(%s\)\s*{\s*".strip()
-            % (self.var, self.params)
-        ).strip()
-
-        #Open while statement
-        self.openWhile = ("\s*while\s*\((%s|\s*%s\s*)\)\s*{\s*".strip()
-                            % (self.opCondicional, self.boolean)
-                        )
-
-        #Open for statement
-        self.openFor = ("\s*for\s*\(%s;%s;\s*(%s)\s*\)\s*{\s*".strip()
-                            % (self.intAssignment, self.opCondicional, self.counters)
-                        )
-
-        #Open multiple comments
-        self.openMultipleComment = ("\s*\/\*\s*[^\/\*]*\s*")
-
-        #All the multiple line statements
-        self.openFlow = ("(%s|%s|%s|%s|%s)".strip() 
-            % (self.openFor, self.openFunction, self.openIf, self.openWhile, self.openMultipleComment)
-                        )
-
-        #Close Bracket
-        self.closeBracket = "\s*}\s*"
-
-        #Close Comments
-        self.closeComment = "\s*[^\*\/]*\s*\*\/\s*"
-
-        #close flow
-        self.closeFlow = ("(%s|%s)".strip() 
-                    % (self.closeBracket, self.closeComment)
-                        ).strip()
+        #Gramaticas de los Lenguajes
+        self.jsGrammar = JSGrammar()
+        self.bashGrammar = BashGrammar()
+        self.rubyGrammar = RubyGrammar()
 
         #Blank Space
-        self.blank = "(\s|\t|\n)*"
+        self.blank = "(\s|\t|\n)*"        
 
-        #Param function
-        self.paramFunction = ("\s*%s.?%s?\(\s*%s\s*\)\s*".strip()
-                    % (self.var, self.var, self.var)
-                            )
+    def isWhatLanguage(self, line):
+        if(
+            (
+            self.bashGrammar.isAnyLinesOpenFlow( line ) or
+            self.bashGrammar.isOneLineStatement( line )
+            ) and
+            (
+            self.rubyGrammar.isAnyLinesOpenFlow( line ) or
+            self.rubyGrammar.isOneLineStatement( line )
+            )
+        
+        ):
+            return 4
+        elif(
+            self.jsGrammar.isAnyLinesOpenFlow( line ) or
+            self.jsGrammar.isOneLineStatement( line )
+        ):
+            return 1
+        elif(
+            self.bashGrammar.isAnyLinesOpenFlow( line ) or
+            self.bashGrammar.isOneLineStatement( line )
+        ):
+            return 2
+        elif(
+            self.rubyGrammar.isAnyLinesOpenFlow( line ) or
+            self.rubyGrammar.isOneLineStatement( line )
+        ):
+            return 3
 
-        #Call Function Params
-        self.callParams = ("\s*(%s|%s)?\s*\,?\s*(%s|%s)?\s*".strip()
-                    % (self.allDataTypes, self.paramFunction, self.allDataTypes, self.paramFunction)
-                        )
+    def isOneLineOpenFlow(self, line, language):
+        if language == 1:
+            return self.jsGrammar.isOneLineOpenFlow( line )
+        elif language == 2 or language == 4:
+            return self.bashGrammar.isOneLineOpenFlow( line )
+        elif language == 3:
+            return self.rubyGrammar.isOneLineOpenFlow( line )
 
-        #Call function
-        self.callFunction = ("\s*%s.?%s?\(%s\)\s*;?\s*".strip()
-                    % (self.var, self.var, self.callParams)
-                            )
+    def isTwoLinesOpenFlow(self, line, language):
+        if language == 1:
+            return self.jsGrammar.isTwoLinesOpenFlow( line )
+        elif language == 2 or language == 4:
+            return self.bashGrammar.isTwoLinesOpenFlow( line )
+        if language == 3:
+            return self.rubyGrammar.isTwoLinesOpenFlow( line )
 
-        #if One Line
-        self.ifOneLine = ("\s*if\s*\(%s\)\s*return\s*%s\s*;?\s*".strip()
-            % (self.opCondicional, self.allDataTypes)
-                        )
-        #return
-        self.returnAll = "\s*return\s*[A-Za-z0-9\+\-\/\*\(\)\s]+\s*;?\s*"
+    def isOpenKeyword(self, line, language):
+        if language == 1:
+            return self.jsGrammar.isOpenKeyword( line )
+        elif language == 2 or language == 4:
+            return self.bashGrammar.isOpenKeyword( line )
+        if language == 3:
+            return self.rubyGrammar.isOpenKeyword( line )
 
-        #One Line Comment //
-        self.oneLineComment = "\s*\/\/\s*[^/]*\s*"
+    def isAnyLinesOpenFlow(self, line, language):
+        if(
+            self.isOneLineOpenFlow( line, language ) or
+            self.isTwoLinesOpenFlow( line, language )
+        ):
+            return True
+        else:
+            return False
 
-        #oneLineStatement
-        self.oneLineStatement = ("(%s|%s|%s|%s|%s)".strip()
-        % (self.returnAll, self.assignment, self.callFunction, self.ifOneLine, self.oneLineComment)
-                        ).strip()
+    def isOneLineStatement(self, line, language):
+        if language == 1:
+            return self.jsGrammar.isOneLineStatement( line )
+        elif language == 2 or language == 4:
+            return self.bashGrammar.isOneLineStatement( line )
+        elif language == 3:
+            return self.rubyGrammar.isOneLineStatement( line )
 
-    
+    def isOpenBracket(self, line, language):
+        if language == 1:
+            return self.jsGrammar.isOpenBracket( line )
+        
+    def isCloseFlow(self, line, language):
+        if language == 1:
+            return self.jsGrammar.isCloseFlow( line )
+        elif language == 2 or language == 4:
+            return self.bashGrammar.isCloseFlow( line )
+        elif language == 3:
+            return self.rubyGrammar.isCloseFlow( line )
 
-    def isOpenFunction(self, line):
-        return True if re.match("^%s$" % self.openFunction, line) else False
+    def isOpenComment(self, line, language):
+        if language == 1:
+            return self.jsGrammar.isOpenComment( line )
+        elif language == 3:
+            return self.rubyGrammar.isOpenComment( line )
 
-    def isOpenFlow(self, line):
-        return True if re.match("^%s$" % self.openFlow, line) else False
-
-    def isCloseFlow(self, line):
-        return True if re.match("^%s$" % self.closeFlow, line) else False
-
-    def isOpenIf(self, line):
-        return True if re.match("^%s$" % self.openIf, line) else False
-
-    def isOpenWhile(self, line):
-        return True if re.match("^%s$" % self.openWhile, line) else False
-
-    def isOpenFor(self, line):
-        return True if re.match("^%s$" % self.openFor, line) else False
-
-    def isOpenComment(self, line):
-        return True if re.match("^%s$" % self.openMultipleComment, line) else False
-
-    def isCloseBracket(self, line):
-        return True if re.match("^%s$" % self.closeBracket, line) else False
+    def isCloseComment(self, line, language):
+        if language == 1:
+            return self.jsGrammar.isCloseComment( line )
+        elif language == 3:
+            return self.rubyGrammar.isCloseComment( line )
 
     def isBlank(self, line):
         return True if re.match("^%s$" % self.blank, line) else False
-
-    def isOneLineStatement(self, line):
-        return True if re.match("^%s$" % self.oneLineStatement, line) else False 
     
     def printRe(self):
-        print(self.openWhile)
+        print(self.rubyGrammar.getRe())

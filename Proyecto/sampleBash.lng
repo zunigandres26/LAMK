@@ -1,0 +1,107 @@
+#---------------------------------------------------------
+#                        Coemntarios
+#---------------------------------------------------------
+# Recopilar los valores VAR1 y VAR2
+
+
+#---------------------------------------------------------
+#                        variables
+#---------------------------------------------------------
+#    Asignacion
+#---------------------
+variable1=juan
+variable2='Esta es la casa de $variable1'
+
+#----------------------
+#    Impresion
+#------------------------
+echo $variable1
+echo variable2
+#---------------------------------------------------------
+#                        Funciones
+#---------------------------------------------------------
+#    Declaracion multilineas
+#-------------------------------
+funcion1(){
+    echo $hola
+  #  echo $hola
+  #  echo $@
+  #  echo $$
+ #   ans=$(($1+$2))
+  #  echo $?
+  #  echo $ans
+  #  echo $?
+}
+#-------------------------------
+#    Declaracion una linea
+#-------------------------------
+#mi_primera_funcion(){ echo Hola Mundo; echo otro Hola; }
+
+#-------------------------------
+#        Ejecuacion
+#-------------------------------
+funcion1 2 2 3
+
+#---------------------------------------------------------
+#                Flujo if
+#---------------------------------------------------------
+#    then arriba
+#----------------------
+if [ condicion ]; then
+        echo "Esto se muestra si se cumple la condición"
+fi
+
+#-----------------------
+#    then abajo
+#-----------------------
+if [ condicion  ]
+then
+        echo "Esto se muestra si se cumple la condición"
+fi
+
+#----------------------------
+#    else
+#------------------------------
+if [ "$1" == "Hola" ];
+then
+        echo "Que tal?"
+#else
+        echo "No se qué decirte"
+fi
+
+#------------------------------
+#    if elif else
+#------------------------------
+if [ "$1" == "Hola" ];
+then
+        echo "Que tal?"
+#elif [ "$1" == "Adiós" ];
+        echo "Hasta pronto"
+#else
+        echo "No se qué decirte"
+fi
+
+#---------------------------------------------------------
+#                Flujo for
+#---------------------------------------------------------
+
+for i in 1 2 3 4 5
+ do
+   echo "Welcome $i times"
+ done
+#--------------------------------
+
+
+
+#---------------------------------------------------------
+#                Flujo while
+#---------------------------------------------------------
+
+while true; do 
+    echo "hola"
+	
+	while [ $HOUR -ne "00" ]; do 
+        echo "Adios"
+	done
+done
+

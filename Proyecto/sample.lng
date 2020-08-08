@@ -1,5 +1,6 @@
 
-/* fsfsdfsdfsdfsdfs
+/* 
+fsfsdfsdfsdfsdfs
 
 fdsfsdfs dfsfdfasdas
 
@@ -9,7 +10,8 @@ fsdfsfs
 
   */
 
-while (true){
+while (true)
+{
  hola();
  }
 function factorial(n){
@@ -33,17 +35,18 @@ console.log('El factorial de 5 es: ', factorial(n));
 
 function isInStock(n,m){
 
-    if (n<m){
+    if (n<ma)
+    {
 
            
 
-        console.log("Hay en Stock!");
+        console.log("Hay en Stock! aa");
 
 
             //dfsfdfasdas dasdasd dasdasd a dasd asdasasdasdasdas
            
 
-        console.error("No hay en Stock!");
+        console.error("No hay en Stock! aa");
 
     }
 
@@ -74,7 +77,14 @@ if (n<m){
 
 isInStock();
 //               dsadasd dasdasdasd
-
+/*
 while (false){
  hola();
- }
+}
+}
+
+*/
+for (var i = 0; i < 9; i++) 
+{
+   mifuncion(n);
+}

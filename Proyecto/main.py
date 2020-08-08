@@ -16,7 +16,10 @@ reader = (Reader()).reader()
 
 #[print( i.info() ) for i in automata.tokens ]
 
-#sintactic = (SyntaxAnalyzer(reader).run())
+
+sintactic = (SyntaxAnalyzer(reader).run())
+
+print("Se ah reconocido al Lenguaje %s" % sintactic.getLanguage( sintactic.language ))
 
 """for i in sintactic.statements:
     print()
@@ -27,6 +30,8 @@ reader = (Reader()).reader()
     print()
 """
 
+"""
+
 parser = Lark(grammar,parser="lalr",transformer = Semantic())
 language = parser.parse
 
@@ -35,3 +40,4 @@ try:
     language(sample)
 except Exception as e:
     print ("Error: %s" % e)
+"""
