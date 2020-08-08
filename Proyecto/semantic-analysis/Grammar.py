@@ -12,8 +12,9 @@ grammar = """
         | function
 
     ?vardeclaration: var "=" string ";"? -> assignvar
-        | var "=" bool ";"? -> assignvar
         | var "=" ar_operation ";"? -> assignvar
+        | var "=" bool ";"? -> assignvar
+        | var "=" null ";"? -> assignvar
 
     ?print: "console" "." "log" "(" var ")" ";"? -> printvarlog
         | "console" "." "error" "(" var ")" ";"? -> printvarerror 
@@ -31,6 +32,11 @@ grammar = """
         | error "(" ar_operation ")" ";"?
         | log "(" string ")" ";"?
         | error "(" string ")" ";"?
+        | varstatementdeclaration
+
+    ?varstatementdeclaration: var "=" string ";"
+        | var "=" bool ";"
+        | var "=" ar_operation ";"
 
     ?log: "console" "." "log"
 
@@ -75,6 +81,9 @@ grammar = """
 
     // Booleano
     ?bool: /true|false/
+
+    // Null
+    ?null: /null/
 
     // Cadena
     ?string: /"[^"]*"/

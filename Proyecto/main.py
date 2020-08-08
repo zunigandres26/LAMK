@@ -7,7 +7,7 @@ from Automata import Automata
 import sys
 from Semantic import Semantic
 from lark import Lark,Transformer
-from Grammar import *
+from Grammar03 import *
 from Reader import Reader
 from SyntaxAnalyzer import SyntaxAnalyzer
 
@@ -30,9 +30,7 @@ print("Se ah reconocido al Lenguaje %s" % sintactic.getLanguage( sintactic.langu
     print()
 """
 
-"""
-
-parser = Lark(grammar,parser="lalr",transformer = Semantic())
+parser = Lark(grammar,parser="lalr",lexer="contextual",transformer = Semantic())
 language = parser.parse
 
 sample = reader.text

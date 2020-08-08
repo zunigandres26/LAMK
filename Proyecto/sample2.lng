@@ -1,0 +1,36 @@
+a = 11;
+b = "MATADME PORFAVOR"
+c = null
+d = true;
+e = true;
+z = 10+7*5-a/(70-67)
+g = 0;
+
+console.log(a)
+console.log(b)
+console.log(c)
+console.log(d)
+console.log(e)
+console.error(z)
+
+
+for (i=0;i<10;i++){
+    console.log("Maldición, Funciona!")
+    g = 10 + i;
+    console.log(g)
+}
+
+if (a<=10) {
+    a=10+(30-5)/3*7;
+    console.error(a)
+}else{
+    console.log("")
+    console.log("Joder")
+}
+
+u=0
+
+while(e){
+    console.error("F")
+    u = u +1
+}
