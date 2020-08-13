@@ -154,7 +154,8 @@ class SyntaxAnalyzer:
             """
         elif(
             not statement.InAnalysis and
-            self.verify.isOpenKeyword( line, self.language )
+            (self.verify.isOpenKeyword( line, self.language ) or
+            self.verify.isChangeFlow( line, self.language ))
         ):
             pass
             """
@@ -229,6 +230,11 @@ class SyntaxAnalyzer:
                 if statement.forClose == 0:
                     statement.analyzed = True
                     statement.InAnalysis = False
+            elif(
+                self.verify.isAnyLinesOpenFlow( statement.atFirst(), self.language ) and
+                self.verify.isChangeFlow( line, self.language )
+            ):
+                pass
               
         else: 
             statement = Statement()

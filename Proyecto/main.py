@@ -29,7 +29,7 @@ print("Se ah reconocido al Lenguaje %s" % sintactic.getLanguage( sintactic.langu
     print(i.lines)
     print()
 """
-
+"""
 parser = Lark(grammar,parser="lalr",lexer="contextual",transformer = Semantic())
 language = parser.parse
 

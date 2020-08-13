@@ -113,5 +113,13 @@ class Verify:
     def isBlank(self, line):
         return True if re.match("^%s$" % self.blank, line) else False
     
+    
+    def isChangeFlow(self, line, language):
+        if language == 1:
+            return self.jsGrammar.isChangeFlow( line )
+        
+    
     def printRe(self):
-        print(self.rubyGrammar.getRe())
+        print(self.jsGrammar.getRe())
+
+    

@@ -25,6 +25,28 @@ class JSGrammar:
         #Operators
         self.operators = "==|>|>=|<|<="
 
+        #Arithmetic Operators
+        self.arithmeticOp = "(\+|\-|\/|\*)"
+
+        #Math operations with parenthesis
+        self.parenthesisArithmetic = ("\s*\(\s*(%s|%s)\s*(%s\s*(%s|%s)\s*)*\)\s*".strip()
+            % (self.number, self.var, self.arithmeticOp, self.number,
+            self.var)
+        ).strip()
+
+        #Arithmetic Operations without paranthesis
+        self.arithmetic = ("\s*(%s|%s)\s*(%s\s*(%s|%s)\s*)*".strip()
+            % (self.number, self.var, self.arithmeticOp, self.number,
+            self.var)
+        ).strip()
+
+        #Arithmetic operations with parentesis
+        self.compoundArithmetic = ("\s*(%s|%s)\s*(%s\s*(%s|%s)\s*(%s\s*(%s|%s)\s*)*)*".strip()
+            % (self.arithmetic, self.parenthesisArithmetic, 
+            self.arithmeticOp, self.arithmetic,
+            self.parenthesisArithmetic, self.arithmeticOp, self.parenthesisArithmetic, self.arithmetic)
+        ).strip()
+
         #Counters
         self.counters = ("%s\+\+|%s\-\-".strip() % (self.var, self.var))
 
@@ -34,8 +56,8 @@ class JSGrammar:
                         ).strip()
 
         #var assignment
-        self.assignment = ("\s*%s\s*=\s*(%s|%s|%s|%s)\s*;?\s*".strip()
-                    % (self.var, self.number, self.string, self.var, self.boolean)
+        self.assignment = ("\s*%s\s*=\s*(%s|%s|%s|%s|%s)\s*;?\s*".strip()
+                    % (self.var, self.number, self.string, self.var, self.boolean, self.compoundArithmetic)
                         )
 
         #Integer Only Assignment
@@ -61,6 +83,11 @@ class JSGrammar:
 
         #Blank Space
         self.blank = "(\s|\t|\n)*"
+
+        #One Line else
+        self.allElse = ("(\s*}\s*else\s*{\s*|\s*else\s*)".strip()
+        
+        ).strip()
 
 
         #Open multiple comments
@@ -92,8 +119,8 @@ class JSGrammar:
         ).strip()
 
         #Open while statement
-        self.oneLineOpenWhile = ("\s*while\s*\((%s|\s*%s\s*)\)\s*{\s*".strip()
-                            % (self.opCondicional, self.boolean)
+        self.oneLineOpenWhile = ("\s*while\s*\((%s|\s*%s\s*|\s*%s\s*)\)\s*{\s*".strip()
+                            % (self.opCondicional, self.boolean, self.var)
                         )
         
         #Open for statement
@@ -126,8 +153,8 @@ class JSGrammar:
 
 
         #Second open while statement
-        self.twoLinesOpenWhile = ("\s*while\s*\((%s|\s*%s\s*)\)\s*".strip()
-                            % (self.opCondicional, self.boolean)
+        self.twoLinesOpenWhile = ("\s*while\s*\((%s|\s*%s\s*|%s)\)\s*".strip()
+                            % (self.opCondicional, self.boolean, self.var)
                         )
 
         #Second Open for statement
@@ -229,5 +256,8 @@ class JSGrammar:
     def isBlank(self, line):
         return True if re.match("^%s$" % self.blank, line) else False
     
+    def isChangeFlow(self, line):
+        return True if re.match("^%s$" % self.allElse, line) else False
+    
     def getRe(self):
-        return self.oneLineOpenFor 
+        return self.allElse 
