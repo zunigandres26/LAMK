@@ -4,7 +4,7 @@ sys.path.insert(0, os.getcwd() + '/sintax-analysis')
 sys.path.insert(0, os.getcwd() + '/semantic-analysis')
 
 from Automata import Automata
-import sys
+import sys,re
 from Semantic import Semantic
 from lark import Lark,Transformer
 from Grammar03 import *
@@ -21,14 +21,10 @@ sintactic = (SyntaxAnalyzer(reader).run())
 
 print("Se ah reconocido al Lenguaje %s" % sintactic.getLanguage( sintactic.language ))
 
-"""for i in sintactic.statements:
-    print()
-    print("-"*50)
-    print("%s encontrado" % i.type)
-    print("-"*50)
-    print(i.lines)
-    print()
-"""
+
+code = sintactic.getCode(sintactic.statements)
+print( code )
+
 """
 parser = Lark(grammar,parser="lalr",lexer="contextual",transformer = Semantic())
 language = parser.parse

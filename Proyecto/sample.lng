@@ -60,7 +60,10 @@ if (n<m){
 
     if (n<m){
 
-           
+           /* gfgdf
+           gfdgdf
+           gdfgdfg
+           gdfgdf*/
 
         console.log("Hay en Stock!");
 

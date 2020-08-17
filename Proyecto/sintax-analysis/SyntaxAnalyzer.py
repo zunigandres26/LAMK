@@ -22,7 +22,7 @@ class SyntaxAnalyzer:
 
         firstLine = 0
         lastLine = len( lines )
-        return self.innerRun( firstLine, lastLine, lines)
+        return self.innerRun( firstLine, lastLine, lines, 1)
         """
         -----------------------------------------------------
         Este metodo establece una ejecucion inicial del metodo
@@ -31,22 +31,30 @@ class SyntaxAnalyzer:
         """
 
 
-    def innerRun(self, i, j, lines):
+    def innerRun(self, i, j, lines, k):
         statement = None
         while( i < j ):
 
             i, statement = self.statementCreator(lines, i, statement) 
 
-            if statement.analyzed: 
+            if (
+                statement.analyzed and
+                not self.verify.isOneLineComment( statement.lines[0], self.getLanguage ) and
+                not self.verify.isOpenComment( statement.atFirst(), self.language) and
+                k == 1 
+            ): 
                 self.statements += [ statement ]
             if(
                 statement.analyzed and
-                statement.type == "flow statement" and 
+                (
+                    statement.type == "flow statement" or
+                    statement.type == "flow statement 2"
+                ) and 
                 not self.verify.isOpenComment( statement.atFirst(), self.language )
             ):
                 firstLine = (i-len( statement.lines )) + 1
                 lastLine = (i-1)
-                self.innerRun(firstLine, lastLine, lines)
+                self.innerRun(firstLine, lastLine, lines, 0)
                 """
                 -----------------------------------------------------
                 Si el analisis de la declaracion es correcto y esta
@@ -125,7 +133,7 @@ class SyntaxAnalyzer:
             self.verify.isTwoLinesOpenFlow( line, self.language )
         ):
             statement.InAnalysis = True
-            statement.type = "flow statement"
+            statement.type = "flow statement 2"
             statement.add( line )
             statement.analyzed = False
             """
@@ -250,6 +258,16 @@ class SyntaxAnalyzer:
             return "Bash"
         if i == 3:
             return "Ruby"
+
+    def getCode(self, statements):
+        code = ""
+        for i in statements:
+            for j in i.lines:
+                if not re.match("^\s*\/\/\s*[^/]*\s*$", j):
+                    code = ("%s\n%s" %(code, j))
+        code = re.sub("\/\*\n*[^\*\/]*\n*\*\/","",code)
+        return code
+
 
 
 

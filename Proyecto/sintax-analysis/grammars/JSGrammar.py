@@ -258,6 +258,9 @@ class JSGrammar:
     
     def isChangeFlow(self, line):
         return True if re.match("^%s$" % self.allElse, line) else False
+
+    def isOneLineComment(self, line):
+        return True if re.match("^%s$" % self.oneLineComment, line) else False
     
     def getRe(self):
         return self.allElse 

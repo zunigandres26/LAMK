@@ -109,6 +109,10 @@ class Verify:
             return self.jsGrammar.isCloseComment( line )
         elif language == 3:
             return self.rubyGrammar.isCloseComment( line )
+    
+    def isOneLineComment(self, line, language):
+        if language == 1:
+            return self.jsGrammar.isOneLineComment
 
     def isBlank(self, line):
         return True if re.match("^%s$" % self.blank, line) else False
