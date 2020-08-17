@@ -8,6 +8,9 @@ grammar = """
         | for_function
         | if
         | while
+        | func
+        | funccall
+        | length
 
     // ******************************************************************************
     // Console Output
@@ -127,6 +130,35 @@ grammar = """
         | bool
 
     // ******************************************************************************
+    // Function
+    // ******************************************************************************
+
+    ?func: "function" var "(" parameters ")" "{" funcstatements* "}" -> declarefunction
+
+    ?parameters: var?
+        | var "," parameters
+        | number?
+        | number "," parameters
+
+    ?funcstatements: return
+        | statements
+        | iffunc
+
+    ?iffunc: "if" "(" ifcondition ")" "{" statements* "}" 
+        | "if" "(" ifcondition ")" "{" statements* "}" else "{" statements* "}"
+        | "if" "(" ifcondition ")" statements ";"?
+        | "if" "(" ifcondition ")" return ";"?
+
+    ?return: r operation ";"?
+        | r bool ";"?
+        | r null ";"?
+        | r funccall ";"?
+
+    ?funccall: var "(" parameters ")" ";"? -> functioncall
+
+    ?r: "return"
+
+    // ******************************************************************************
     // Terminales
     // ******************************************************************************
 
@@ -150,6 +182,10 @@ grammar = """
     // Número
     ?number: /\d+(\.\d+)?/
 
+    // Length
+    ?length: var ".length" ";" -> getlength 
+
     //Ignorar espacios, saltos de línea y tabulados
     %ignore /\s+/
+
 """

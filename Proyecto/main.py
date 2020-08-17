@@ -16,10 +16,10 @@ reader = (Reader()).reader()
 
 #[print( i.info() ) for i in automata.tokens ]
 
-
+"""
 sintactic = (SyntaxAnalyzer(reader).run())
 
-print("Se ah reconocido al Lenguaje %s" % sintactic.getLanguage( sintactic.language ))
+#print("Se ah reconocido al Lenguaje %s" % sintactic.getLanguage( sintactic.language ))
 
 
 code = sintactic.getCode(sintactic.statements)
@@ -34,4 +34,3 @@ try:
     language(sample)
 except Exception as e:
     print ("Error: %s" % e)
-"""

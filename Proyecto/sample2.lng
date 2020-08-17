@@ -6,6 +6,12 @@ e = true;
 z = 10+7*5-a/(70-67)
 g = 0;
 
+test = "Hola Maldito Mundo";
+
+test.length;
+
+noSeVaAPoder = a + 10;
+console.log(noSeVaAPoder)
 console.log(a)
 console.log(b)
 console.log(c)
@@ -30,7 +36,33 @@ if (a<=10) {
 
 u=0
 
-while(e){
+while(u<=10){
     console.error("F")
     u = u +1
 }
+
+function factorial (n){
+
+    x = 10+5*6/8+a;
+    y = "Hola Mundo"
+    void1 = true
+    void2 = null
+    
+    console.error(x)
+    console.log(y)
+    console.error(void1);
+    console.log(void2);
+
+    if (n<60) console.error("Funciona el If de una línea dentro de funciones")
+
+    if (n<60){
+        console.log("El número es menor")
+        a = 89*7676/90*(x+90);
+        console.error(a);
+    }else{
+        console.error("El número es mayor")
+    }
+}
+
+factorial(a);
+factorial(61)
