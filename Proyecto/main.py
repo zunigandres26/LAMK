@@ -16,20 +16,21 @@ reader = (Reader()).reader()
 
 #[print( i.info() ) for i in automata.tokens ]
 
-
+"""
 sintactic = (SyntaxAnalyzer(reader).run())
 
-print("Se ah reconocido al Lenguaje %s" % sintactic.getLanguage( sintactic.language ))
+#print("Se ah reconocido al Lenguaje %s" % sintactic.getLanguage( sintactic.language ))
 
-"""for i in sintactic.statements:
+for i in sintactic.statements:
     print()
     print("-"*50)
     print("%s encontrado" % i.type)
     print("-"*50)
-    print(i.lines)
+    print(i.lines[0])
     print()
+
 """
-"""
+
 parser = Lark(grammar,parser="lalr",lexer="contextual",transformer = Semantic())
 language = parser.parse
 
@@ -38,4 +39,3 @@ try:
     language(sample)
 except Exception as e:
     print ("Error: %s" % e)
-"""
