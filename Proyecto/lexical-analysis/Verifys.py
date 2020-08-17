@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from Token import Token
 
-class Verify: 
+class Verifys: 
 
     def __init__(self): 
         pass

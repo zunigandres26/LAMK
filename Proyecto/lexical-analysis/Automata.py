@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from Token import Token 
-from Verify import Verify
+from Verifys import Verifys
 
 class Automata: 
 
     def __init__(self, reader): 
         self.reader = reader
-        self.verify = Verify()
+        self.verify = Verifys()
 
     def run(self): 
         text = self.reader.text + " "

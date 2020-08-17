@@ -2,20 +2,27 @@ import sys, os
 sys.path.insert(0, os.getcwd() + '/lexical-analysis')
 sys.path.insert(0, os.getcwd() + '/sintax-analysis')
 sys.path.insert(0, os.getcwd() + '/semantic-analysis')
+sys.path.insert(0, os.getcwd() + '/tab-manager')
 
 from Automata import Automata
 import sys,re
 from Semantic import Semantic
 from lark import Lark,Transformer
 from Grammar03 import *
+from TabView import TabView
 from Reader import Reader
 from SyntaxAnalyzer import SyntaxAnalyzer
 
+
 reader = (Reader()).reader()
-#automata = (Automata(reader)).run()
+automata = (Automata(reader)).run()
 
-#[print( i.info() ) for i in automata.tokens ]
+values = []
+for i in automata.tokens:
+    values.append(i.info())
 
+tv = TabView(values, values, values)
+tv.print()
 
 sintactic = (SyntaxAnalyzer(reader).run())
 
@@ -26,8 +33,13 @@ code = sintactic.getCode(sintactic.statements)
 #print( code )
 
 
+
+
+
 parser = Lark(grammar,parser="lalr",lexer="contextual",transformer = Semantic())
 language = parser.parse
+
+
 
 sample = reader.text
 try:
