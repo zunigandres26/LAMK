@@ -121,6 +121,18 @@ class Verify:
     def isChangeFlow(self, line, language):
         if language == 1:
             return self.jsGrammar.isChangeFlow( line )
+
+    def isAssignment(self, line, language):
+        if language == 1:
+            return self.jsGrammar.isAssignment( line )
+
+    def isOneLineOpenFunction(self, line, language):
+        if language == 1:
+            return self.jsGrammar.isOneLineOpenFunction( line )
+
+    def isOneLineOpenFor(self, line, language):
+        if language == 1:
+            return self.jsGrammar.isOneLineOpenFor( line )
         
     
     def printRe(self):

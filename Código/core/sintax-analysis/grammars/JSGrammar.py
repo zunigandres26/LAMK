@@ -64,7 +64,7 @@ class JSGrammar:
         self.intAssignment = ("\s*%s\s*=\s*%s\s*".strip()
                             % (self.var, self.number))
         #Params
-        self.params = ("\s*%s\s*\,?\s*(%s)?\s*" % (self.var, self.var))
+        self.params = ("(\s*%s\s*\,?\s*(%s)?\s*)?" % (self.var, self.var))
 
 
         #Open Bracket
@@ -269,6 +269,9 @@ class JSGrammar:
 
     def isOneLineComment(self, line):
         return True if re.match("^%s$" % self.oneLineComment, line) else False
+
+    def isAssignment(self, line):
+        return True if re.match("^%s$" % self.assignment, line) else False
     
     def getRe(self):
-        return self.length 
+        return self.assignment 

@@ -41,7 +41,7 @@ while(u<=10){
     u = u +1
 }
 
-function factorial (n){
+function factorial (){
 
     x = 10+5*6/8+a;
     y = "Hola Mundo"

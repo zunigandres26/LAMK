@@ -268,6 +268,41 @@ class SyntaxAnalyzer:
         code = re.sub("\/\*\n*[^\*\/]*\n*\*\/","",code)
         return code
 
+    def preprocess(self, statements):
+        code = ""
+        for i in statements:
+            for j in i.lines:
+                if(
+                    self.verify.isAssignment( j, self.language) or
+                    self.verify.isOneLineOpenFunction(j, self.language) or
+                    self.verify.isOneLineOpenFor( j, self.language )   
+                ):
+                    if self.verify.isOneLineOpenFor( j, self.language ):
+                        if not re.search("([\w][\w0-9]*\s*=\s*([\w][\w0-9]*|[0-9]))",j) == None:
+                            j = re.search("([\w][\w0-9]*\s*=\s*([\w][\w0-9]*|[0-9]))",j)
+                            j = j[0]
 
+                        
+                    code = ("%s\n%s" %(code, j))
+        return code
+
+    def clean(self, code):
+        array = []
+        lines = re.split("\n",code)
+        for line in lines:
+            line = re.sub("(;|\s*)","",line).strip()
+            if self.verify.isAssignment( line, self.language ):
+                line = re.split("=", line)
+                line.append("Variable")
+                array += [line]
+            else:
+                line = re.sub("(\(|\)|function|\{)"," ", line).strip()
+                line = re.sub("\s+"," ", line)
+                line = re.split("\s", line)
+                if len(line) < 2: line.append(" ")
+                line.append("Function")
+                array += [line]
+            
+        return array
 
 

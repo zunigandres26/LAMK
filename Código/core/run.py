@@ -62,6 +62,11 @@ class execute:
     
     def tabview(self, filename):
         print("Alex aun nada sabe de python")
+        reader = (Reader()).reader(filename)
+        sintactic = (SyntaxAnalyzer(reader).run())
+        code = sintactic.preprocess(sintactic.statements)
+        cleanCode = sintactic.clean(code)
+        print(cleanCode)
 
     def help(self):
         print("comandos soportados\n")
