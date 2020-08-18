@@ -211,7 +211,15 @@ class Automata:
             token.formed = True
             token.inFormation = False
             token.type = "End of statement"
-        
+        elif( 
+            not token.inFormation and 
+            (self.verify.whitespace( char ) or self.verify.isLineBreak(char))
+        ):
+            pass
+        elif(
+            not token.inFormation
+        ):
+            quit("Error. No se ha reconocido el caracter '%s' " % chr(char))
         elif( 
                 token.inFormation 
             ):
@@ -315,8 +323,7 @@ class Automata:
                         pos -= 1 #-------NUEVO------
 
                     token.formed = True 
-        elif(not token.inFormation):
-            quit("has muerto en el intento")
+       
         else: 
             token = Token()
             
