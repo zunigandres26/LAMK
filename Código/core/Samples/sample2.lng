@@ -41,7 +41,7 @@ while(u<=10){
     u = u +1
 }
 
-function factorial (){
+function factorial (n,m){
 
     x = 10+5*6/8+a;
     y = "Hola Mundo"
@@ -62,7 +62,14 @@ function factorial (){
     }else{
         console.error("El número es mayor")
     }
+
+}
+function prueba (){
+    console.log("JODEEEEERRRR")
 }
 
-factorial(a);
-factorial(61)
+factorial(10,20);
+factorial(0,78)
+
+
+prueba();

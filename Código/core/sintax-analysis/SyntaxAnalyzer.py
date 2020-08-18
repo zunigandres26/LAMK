@@ -295,7 +295,7 @@ class SyntaxAnalyzer:
                 line = re.split("=", line)
                 line.append("Variable")
                 array += [line]
-            else:
+            elif "function" in line:
                 line = re.sub("(\(|\)|function|\{)"," ", line).strip()
                 line = re.sub("\s+"," ", line)
                 line = re.split("\s", line)

@@ -762,3 +762,32 @@ class Semantic(Transformer):
                 tokenizedStatements[i] = cleanStatement
 
         return tokenizedStatements
+
+    # tablita
+        """
+            tablita es una función que recupera los valores finales de las variables y funciones para 
+            su posterior uso.
+            @param array: Arreglo pasado desde el analizador sintáctico con los valores iniciales de las variables.
+            @return table: Devuelve una tabla con los valores finales de las funciones y variables.
+        """
+    def tablita(self,array):
+        table = []
+        for i in array:
+            if (i[0] in self.variables):
+                i.append(self.variables[i[0]])
+                table.append((i))
+            elif (i[2] == "Function"):
+                params = i[1].split(",")
+                if len(params)==1:
+                    i.append(" ")
+                elif len(params)>1:
+                    p = ""
+                    for x in range(len(params)):
+                        if params[x] in params:
+                            if len(params)-1 != x:
+                                p+=self.variables[params[x]]+","
+                            else:
+                                p+=self.variables[params[x]]
+                    i.append(p)
+                table.append((i))
+        return table
