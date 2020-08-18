@@ -48,16 +48,19 @@ class execute:
             self.help()
     
     def exec(self, filename):
+        # Ejecución del analizador Léxico
         reader = (Reader()).reader(filename)
         automata = (Automata(reader)).run()
+        
+        # Ejecución del analizador Sintáctico
+        sintactic = (SyntaxAnalyzer(reader).run())
 
-        #sintactic = (SyntaxAnalyzer(reader).run())
-
+        # Ejecución del analizador Semántico
         parser = Lark(grammar,parser="lalr",lexer="contextual",transformer = Semantic())
         language = parser.parse
 
         try:
-            language(reader.text)
+            language(sintactic.getCode(sintactic.statements))
         except Exception as e:
             print ("Error: %s" % e)
 
