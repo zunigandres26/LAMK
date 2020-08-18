@@ -70,6 +70,9 @@ class JSGrammar:
         #Open Bracket
         self.openBracket = "\s*{\s*"
 
+        #Length
+        self.length = ("\s*%s\.length\s*" %(self.var))
+
         #all open flow keyword
         self.allOpenKeyword = ("(%s)".strip()
             % (self.openBracket)
@@ -129,8 +132,8 @@ class JSGrammar:
                         )
 
         #All the multiple line statements
-        self.oneLineOpenFlow = ("(%s|%s|%s|%s|%s|%s)".strip() 
-            % (self.oneLineOpenFor, self.oneLineOpenFunction, self.oneLineOpenIf, self.oneLineOpenWhile, self.openMultipleComment, self.openBracket)
+        self.oneLineOpenFlow = ("(%s|%s|%s|%s|%s|%s|%s)".strip() 
+            % (self.oneLineOpenFor, self.oneLineOpenFunction, self.oneLineOpenIf, self.oneLineOpenWhile, self.openMultipleComment, self.openBracket, self.length)
                         )
 
         """
@@ -263,4 +266,4 @@ class JSGrammar:
         return True if re.match("^%s$" % self.oneLineComment, line) else False
     
     def getRe(self):
-        return self.allElse 
+        return self.length 

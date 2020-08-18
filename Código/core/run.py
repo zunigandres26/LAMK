@@ -51,6 +51,8 @@ class execute:
     def exec(self, filename):
         reader = (Reader()).reader(filename)
         automata = (Automata(reader)).run()
+        sintactic = (SyntaxAnalyzer(reader).run())
+
 
     def recognize(self, filename):
         reader = (Reader()).reader(filename)
