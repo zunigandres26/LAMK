@@ -7,6 +7,7 @@ sys.path.insert(0, os.getcwd() + '/core/semantic-analysis')
 
 from Automata import Automata
 import re
+import subprocess
 from Semantic import Semantic
 from lark import Lark,Transformer
 from Grammar import *
@@ -55,7 +56,8 @@ class execute:
         sintactic = (SyntaxAnalyzer(reader).run())
 
         # Ejecución del analizador Semántico
-        parser = Lark(grammar,parser="lalr",lexer="contextual",transformer = Semantic())
+        transformer = Semantic()
+        parser = Lark(grammar,parser="lalr",lexer="contextual",transformer = transformer)
         language = parser.parse
 
         try:
@@ -71,13 +73,25 @@ class execute:
         print("\n\nEl código leído es:\n",sintactic.getCode(sintactic.statements))
     
     def tabview(self, filename):
-        print("Alex aun nada sabe de python")
         reader = (Reader()).reader(filename)
         sintactic = (SyntaxAnalyzer(reader).run())
         code = sintactic.preprocess(sintactic.statements)
         cleanCode = sintactic.clean(code)
-        print(cleanCode)
-        #print(tabulate(result, headers=["Lexema","Token","Initial Value","Final Value"], showindex="always", tablefmt="fancy_grid"))
+        
+        transformer = Semantic()
+        parser = Lark(grammar,parser="lalr",lexer="contextual",transformer = transformer)
+        language = parser.parse
+
+        self.blockPrint()
+
+        try:
+            language(sintactic.getCode(sintactic.statements))
+            result = transformer.tablita(cleanCode)
+        except Exception as e:
+            print ("Error: %s" % e)
+
+        self.enablePrint()
+        print(tabulate(result, headers=["#","Lexema","Token","Initial Value","Final Value"], showindex="always", tablefmt="fancy_grid"))
 
     def help(self):
         print("Bienvenido a la utilidad de ayuda de LIR 1.0\n")
@@ -97,6 +111,12 @@ class execute:
         print("* @version Released Version 1.0", " "*11, "*" )
         print("* @date 2020-08-17", " "*24, "*")
         print("*"*45)
+
+    def blockPrint(self):
+        sys.stdout = open(os.devnull, 'w')
+
+    def enablePrint(self):
+        sys.stdout = sys.__stdout__
 
 """
 reader = (Reader()).reader()
