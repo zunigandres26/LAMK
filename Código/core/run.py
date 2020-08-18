@@ -4,23 +4,21 @@ import sys, os
 sys.path.insert(0, os.getcwd() + '/core/lexical-analysis')
 sys.path.insert(0, os.getcwd() + '/core/sintax-analysis')
 sys.path.insert(0, os.getcwd() + '/core/semantic-analysis')
-sys.path.insert(0, os.getcwd() + '/core/tab-manager')
 
 from Automata import Automata
 import re
 from Semantic import Semantic
 from lark import Lark,Transformer
 from Grammar import *
-from TabView import TabView
 from Reader import Reader
 from SyntaxAnalyzer import SyntaxAnalyzer
+from tabulate import tabulate
 
 
 class execute:
 
     def __init__(self, parameters):
         self.parameters = parameters
-        
 
     def run(self):
         if len(self.parameters) > 1:
@@ -49,9 +47,21 @@ class execute:
             self.help()
     
     def exec(self, filename):
+        # Ejecución del analizador Léxico
         reader = (Reader()).reader(filename)
         automata = (Automata(reader)).run()
+        
+        # Ejecución del analizador Sintáctico
         sintactic = (SyntaxAnalyzer(reader).run())
+
+        # Ejecución del analizador Semántico
+        parser = Lark(grammar,parser="lalr",lexer="contextual",transformer = Semantic())
+        language = parser.parse
+
+        try:
+            language(sintactic.getCode(sintactic.statements))
+        except Exception as e:
+            print ("Error: %s" % e)
 
 
     def recognize(self, filename):
@@ -67,9 +77,10 @@ class execute:
         code = sintactic.preprocess(sintactic.statements)
         cleanCode = sintactic.clean(code)
         print(cleanCode)
+        #print(tabulate(result, headers=["Lexema","Token","Initial Value","Final Value"], showindex="always", tablefmt="fancy_grid"))
 
     def help(self):
-        print("comandos soportados\n")
+        print("Bienvenido a la utilidad de ayuda de LIR 1.0\n")
         print("Ejecutar el programa                  --exec fileName")
         print("Muestra la tabla de simbolos          --tabview fileName")
         print("Muestra la tabla de simbolos          --recognize fileName")
@@ -78,7 +89,7 @@ class execute:
     
     def info(self):
         print("*"*45)
-        print("* Interprete:", " "*29, "*\n*"," "*41, "*")
+        print("* Interprete LRI", " "*26, "*\n*"," "*41, "*")
         print("* @author Alexis Daniel Ochoa   20161002139 *")
         print("* @author Andres Alberto Zuniga 20161003850 *")
         print("* @author Marco Tulio Ruiz      20171006559 *")

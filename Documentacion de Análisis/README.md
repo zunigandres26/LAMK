@@ -3,6 +3,21 @@
 ---
 # Introducción
 
+# Interprete de Lenguaje LRI (Language Recognizer and Interpreted)
+
+El interprete de lenguaje LRI cuenta con los siguientes comandos:
+
+- **--info**: Muestra la información sobre la versión y los autores del Interprete.
+
+- **--tabview [Program.lng]**: Muestra en consola la tabla de símbolos generados durante la ejecución del programa.
+
+- **--recognize [Program.lng]**: Reconoce el lenguaje en el que esta escrito el programa. Los lenguajes soportados son Javascript, Ruby y Bash.
+
+- **--exec [Program.lng]**: Ejecuta el programa ingresado el cual pasa por el analizador léxico, sintáctico y semántio.
+
+- **--help**: Muestra los comandos soportados por el interprete.
+
+
 # Analizador Léxico
 
 El analizador Léxico es el encargado de verificar que todos los símbolos o caracteres en el archivo a leer sean válidos o que pertenezcan al lenguaje Javascript.
