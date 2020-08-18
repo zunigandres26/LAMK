@@ -13,7 +13,7 @@ test.length;
 noSeVaAPoder = a + 10;
 console.log(noSeVaAPoder)
 console.log(a)
-console.log(b)
+console.log(b);
 console.log(c)
 console.log(d)
 console.log(e)
@@ -28,7 +28,7 @@ for (i=0;i<10;i++){
 
 if (a<=10) {
     a=10+(30-5)/3*7;
-    console.error(a)
+    console.error(a);
 }else{
     console.log("")
     console.log("Joder")
@@ -45,7 +45,7 @@ function factorial (n){
 
     x = 10+5*6/8+a;
     y = "Hola Mundo"
-    void1 = true
+    void1 = true;
     void2 = null
     
     console.error(x)
