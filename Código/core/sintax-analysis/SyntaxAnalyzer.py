@@ -199,6 +199,34 @@ class SyntaxAnalyzer:
             ------------------------------------------------------
             """
             if(
+                self.verify.isOpenComment( line, self.language )
+            ):
+                statement.add( line )
+                j=True
+                while(j):
+                    pos = pos + 1
+                    if not self.verify.isCloseComment(lines[pos], self.language):
+                        statement.add( lines[pos] )
+                    else:
+                        statement.add( lines[pos] )
+                        
+                        j=False
+            elif(
+                self.verify.isOpenComment( line, self.language )
+            ):
+                statement.add( line )
+                j=True
+                while(j):
+                    pos = pos + 1
+                    if not self.verify.isCloseComment(lines[pos], self.language):
+                        statement.add( lines[pos] )
+                    else:
+                        statement.add( line )
+                        
+                        j=False
+
+
+            elif(
                 self.verify.isAnyLinesOpenFlow( statement.atFirst(), self.language )and
                 not self.verify.isOneLineOpenFlow( line, self.language ) and
                 not self.verify.isCloseFlow( line, self.language )
@@ -259,13 +287,24 @@ class SyntaxAnalyzer:
         if i == 3:
             return "Ruby"
 
+    
     def getCode(self, statements):
         code = ""
         for i in statements:
-            for j in i.lines:
-                if not re.match("^\s*\/\/\s*[^/]*\s*$", j):
-                    code = ("%s\n%s" %(code, j))
-        code = re.sub("\/\*\n*[^\*\/]*\n*\*\/","",code)
+            j = 0
+            while j < len(i.lines):
+                if (
+                    self.verify.isOpenComment( i.lines[j], self.language )
+                ):
+                    state = True
+                    while(state):
+                        j = j + 1
+                        if self.verify.isCloseComment( i.lines[j], self.language):
+                            j = j + 1
+                            state = False
+                if not re.match("^\s*\/\/\s*[^/]*\s*$", i.lines[j]):
+                    code = ("%s\n%s" %(code, i.lines[j]))
+                j = j + 1
         return code
 
     def preprocess(self, statements):

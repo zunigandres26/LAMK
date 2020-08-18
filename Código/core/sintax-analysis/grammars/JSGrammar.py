@@ -274,4 +274,4 @@ class JSGrammar:
         return True if re.match("^%s$" % self.assignment, line) else False
     
     def getRe(self):
-        return self.assignment 
+        return self.oneLineOpenIf 

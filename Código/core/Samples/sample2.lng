@@ -54,19 +54,28 @@ function factorial (n,m){
     console.log(void2);
 
     if (n<60) console.error("Funciona el If de una línea dentro de funciones")
-
-    if (n<60){
+/*
+    if(n<80){
         console.log("El número es menor")
-        a = 89*7676/90*(x+90);
-        console.error(a);
+        a = 89*7676/90*(x+90)
+        console.error(a)
     }else{
         console.error("El número es mayor")
-    }
-
+    
+    }*/
+     
 }
+
+
+
 function prueba (){
     console.log("JODEEEEERRRR")
+    /*
 }
+}
+    */
+}
+
 
 factorial(10,20);
 factorial(0,78)
