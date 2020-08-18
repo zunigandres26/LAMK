@@ -52,7 +52,7 @@ function factorial (n,m){
     console.log(y)
     console.error(void1);
     console.log(void2);
-
+    /*
     if (n<60) console.error("Funciona el If de una línea dentro de funciones")
 
     if (n<60){
@@ -61,7 +61,7 @@ function factorial (n,m){
         console.error(a);
     }else{
         console.error("El número es mayor")
-    }
+    }*/
 
 }
 function prueba (){
