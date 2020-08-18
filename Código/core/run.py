@@ -4,16 +4,15 @@ import sys, os
 sys.path.insert(0, os.getcwd() + '/core/lexical-analysis')
 sys.path.insert(0, os.getcwd() + '/core/sintax-analysis')
 sys.path.insert(0, os.getcwd() + '/core/semantic-analysis')
-sys.path.insert(0, os.getcwd() + '/core/tab-manager')
 
 from Automata import Automata
 import re
 from Semantic import Semantic
 from lark import Lark,Transformer
 from Grammar import *
-from TabView import TabView
 from Reader import Reader
 from SyntaxAnalyzer import SyntaxAnalyzer
+from tabulate import tabulate
 
 
 class execute:
@@ -71,8 +70,14 @@ class execute:
         print("Se ha reconocido al Lenguaje %s" % sintactic.getLanguage( sintactic.language ))
         print("\n\nEl código leído es:\n",sintactic.getCode(sintactic.statements))
     
-    def tabview(self, filename):
-        print("Alex aun nada sabe de python")
+    def tabview(self, filename):        
+        result = [
+            ("a","variable","10","30"),
+            ("b","variable","Trues","True"),
+            ("factorial","function","n, m","5,10"),
+            ("void","variable","null","False")            
+            ]
+        print(tabulate(result, headers=["Lexema","Token","Initial Value","Final Value"], showindex="always", tablefmt="fancy_grid"))
 
     def help(self):
         print("Bienvenido a la utilidad de ayuda de LIR 1.0\n")
