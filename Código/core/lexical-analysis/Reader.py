@@ -2,21 +2,18 @@
 
 class Reader: 
 
-    def __init__(self): pass
+    def __init__(self): 
+        pass
 
-    def reader(self):
-        self.text = []
-
+    def reader(self, fileName):  
+        self.text = ""      
         try: 
-            text = input()
-            while True: 
-                self.text += [ self.clean(text) ]
-                text = input()
+            f = open(fileName,"r")
+            self.text = f.read()
+            f.close()
 
         except EOFError:
             pass 
-
-        self.text = "\n".join( self.text )
 
         return self
 

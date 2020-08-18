@@ -20,32 +20,52 @@ class execute:
 
     def __init__(self, parameters):
         self.parameters = parameters
+        
 
     def run(self):
         if len(self.parameters) > 1:
-            if self.parameters[1] == "--exec":
-                self.exec()
-            elif self.parameters[1] == "--tabview":
-                self.tabview()
-            elif self.parameters[1] == "--info":
-                self.info()      
-            elif self.parameters[1] == "--help":
-                self.help()
-            else: 
+            if len(self.parameters) == 3:                
+                if self.parameters[1] == "--exec":
+                    self.exec(self.parameters[2])
+                elif self.parameters[1] == "--tabview":
+                    self.tabview(self.parameters[2])  
+                elif self.parameters[1] == "--recognize":
+                    self.recognize(self.parameters[2])  
+                else:
+                    print("Comando no soportado o desconocido")
+                    self.help()         
+            elif len(self.parameters) == 2:
+                if self.parameters[1] == "--info":
+                    self.info()      
+                elif self.parameters[1] == "--help":
+                    self.help()
+                else: 
+                    print("Comando no soportado o desconocido")
+                    self.help()
+            else:
                 print("Comando no soportado o desconocido")
                 self.help()
         else:
             self.help()
-    def exec(self):
-        print("Alex no sabe de python")
     
-    def tabview(self):
-        pass
+    def exec(self, filename):
+        reader = (Reader()).reader(filename)
+        automata = (Automata(reader)).run()
+
+    def recognize(self, filename):
+        reader = (Reader()).reader(filename)
+        sintactic = (SyntaxAnalyzer(reader).run())
+        print("Se ha reconocido al Lenguaje %s" % sintactic.getLanguage( sintactic.language ))
+        print("\n\nEl código leído es:\n",sintactic.getCode(sintactic.statements))
+    
+    def tabview(self, filename):
+        print("Alex aun nada sabe de python")
 
     def help(self):
         print("comandos soportados\n")
-        print("Ejecutar el programa                  --exec")
-        print("Muestra la tabla de simbolos          --tabview")
+        print("Ejecutar el programa                  --exec fileName")
+        print("Muestra la tabla de simbolos          --tabview fileName")
+        print("Muestra la tabla de simbolos          --recognize fileName")
         print("Muestra la informacion del programa   --info")
         print("Comandos soportados                   --help")
     
@@ -62,7 +82,7 @@ class execute:
 
 """
 reader = (Reader()).reader()
-automata = (Automata(reader)).run()
+
 
 values = []
 for i in automata.tokens:
@@ -70,18 +90,6 @@ for i in automata.tokens:
 
 tv = TabView(values, values, values)
 tv.print()
-
-sintactic = (SyntaxAnalyzer(reader).run())
-
-#print("Se ah reconocido al Lenguaje %s" % sintactic.getLanguage( sintactic.language ))
-
-
-code = sintactic.getCode(sintactic.statements)
-#print( code )
-
-
-
-
 
 parser = Lark(grammar,parser="lalr",lexer="contextual",transformer = Semantic())
 language = parser.parse

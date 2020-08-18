@@ -211,7 +211,7 @@ class Automata:
             token.formed = True
             token.inFormation = False
             token.type = "End of statement"
-
+        
         elif( 
                 token.inFormation 
             ):
@@ -315,8 +315,11 @@ class Automata:
                         pos -= 1 #-------NUEVO------
 
                     token.formed = True 
+        elif(not token.inFormation):
+            quit("has muerto en el intento")
         else: 
             token = Token()
+            
         pos += 1
 
         return (pos, token)
