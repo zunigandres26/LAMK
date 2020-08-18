@@ -71,7 +71,7 @@ class JSGrammar:
         self.openBracket = "\s*{\s*"
 
         #Length
-        self.length = ("\s*%s\.length\s*" %(self.var))
+        self.length = ("\s*%s\.length\s*;?" % (self.var))
 
         #all open flow keyword
         self.allOpenKeyword = ("(%s)".strip()
@@ -86,6 +86,11 @@ class JSGrammar:
 
         #Blank Space
         self.blank = "(\s|\t|\n)*"
+
+        #return
+        self.returnVar = ("\s*return\s*%s\s*".strip()
+            % (self.allDataTypes)
+        ).strip()
 
         #One Line else
         self.allElse = ("(\s*}\s*else\s*{\s*|\s*else\s*)".strip()
@@ -132,8 +137,8 @@ class JSGrammar:
                         )
 
         #All the multiple line statements
-        self.oneLineOpenFlow = ("(%s|%s|%s|%s|%s|%s|%s)".strip() 
-            % (self.oneLineOpenFor, self.oneLineOpenFunction, self.oneLineOpenIf, self.oneLineOpenWhile, self.openMultipleComment, self.openBracket, self.length)
+        self.oneLineOpenFlow = ("(%s|%s|%s|%s|%s|%s)".strip() 
+            % (self.oneLineOpenFor, self.oneLineOpenFunction, self.oneLineOpenIf, self.oneLineOpenWhile, self.openMultipleComment, self.openBracket)
                         )
 
         """
@@ -193,8 +198,8 @@ class JSGrammar:
                             )
 
         #if One Line
-        self.ifOneLine = ("\s*if\s*\(%s\)\s*return\s*%s\s*;?\s*".strip()
-            % (self.opCondicional, self.allDataTypes)
+        self.ifOneLine = ("\s*if\s*\(%s\)\s*(%s|%s|%s)\s*;?\s*".strip()
+            % (self.opCondicional, self.returnVar, self.assignment, self.callFunction)
                         )
         #return
         self.returnAll = "\s*return\s*[A-Za-z0-9\+\-\/\*\(\)\s]+\s*;?\s*"
@@ -203,8 +208,8 @@ class JSGrammar:
         self.oneLineComment = "\s*\/\/\s*[^/]*\s*"
 
         #oneLineStatement
-        self.oneLineStatement = ("(%s|%s|%s|%s|%s)".strip()
-        % (self.returnAll, self.assignment, self.callFunction, self.ifOneLine, self.oneLineComment)
+        self.oneLineStatement = ("(%s|%s|%s|%s|%s|%s)".strip()
+        % (self.returnAll, self.assignment, self.callFunction, self.ifOneLine, self.oneLineComment, self.length)
                         ).strip()
         
 
