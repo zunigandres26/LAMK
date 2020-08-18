@@ -219,7 +219,10 @@ class Automata:
         elif(
             not token.inFormation
         ):
-            quit("Error. No se ha reconocido el caracter '%s' " % chr(char))
+            character = chr(char)
+            errorLine = self.searchTokenLine( character )
+            quit("ERROR.\nNo se ha reconocido el caracter '%s' en la línea %d, %d" % (character, errorLine[0], errorLine[1]))
+
         elif( 
                 token.inFormation 
             ):
@@ -330,3 +333,34 @@ class Automata:
         pos += 1
 
         return (pos, token)
+
+    # Posición del token desconocido
+    def searchTokenLine(self, token):
+        errorLine = 0
+        countCharacter = 0
+
+        f = self.reader
+        f = f.text.split("\n")
+
+
+        for line in f:
+            errorLine += 1
+            
+            if self.stringInspector(token, line.strip()):
+                countCharacter = self.countCharacter(token, line.strip())
+                break
+        return (errorLine, countCharacter)
+    
+    # Coincidencia con el token desconocido
+    def stringInspector(self, token, line):
+        sentence = [True for x in line if x == token]
+        return sentence[0] if sentence else False
+
+    # Posición del token desconocido, eje horizontal
+    def countCharacter(self, token, line): 
+        count = 0
+        for i in range(len(line)):
+            if line[i] == token: 
+                count = i + 1
+                break
+        return count
