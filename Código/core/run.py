@@ -91,7 +91,7 @@ class execute:
             print ("Error: %s" % e)
 
         self.enablePrint()
-        print(tabulate(result, headers=["#","Lexema","Token","Initial Value","Final Value"], showindex="always", tablefmt="fancy_grid"))
+        print(tabulate(result, headers=["#","Lexema","Initial Value","Token","Final Value"], showindex="always", tablefmt="fancy_grid"))
 
     def help(self):
         print("Bienvenido a la utilidad de ayuda de LIR 1.0\n")
@@ -117,26 +117,3 @@ class execute:
 
     def enablePrint(self):
         sys.stdout = sys.__stdout__
-
-"""
-reader = (Reader()).reader()
-
-
-values = []
-for i in automata.tokens:
-    values.append(i.info())
-
-tv = TabView(values, values, values)
-tv.print()
-
-parser = Lark(grammar,parser="lalr",lexer="contextual",transformer = Semantic())
-language = parser.parse
-
-
-
-sample = reader.text
-try:
-    language(code)
-except Exception as e:
-    print ("Error: %s" % e)
-"""
