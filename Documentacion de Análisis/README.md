@@ -409,7 +409,7 @@ y en el caso que sea un lexema de cierre el statement.forClose disminuye
 Cuando es una declaracion de un sola linea
 
 ```python
-fiesta = "se armó la peda"
+Estudiante = "Juan Zelaya"
 ```
 se agrega la linea y se establecen los siguientes atributos al objeto
 ```python
