@@ -1,9 +1,73 @@
 ![](https://drive.google.com/uc?export=view&id=1UK3ofAZz0yaqMaX93yToOJCEela9zgK6)
 
 ---
+# Índice
+
+[**1. Interprete de Lenguaje LRI**](#interprete-de-lenguaje-lri)
+<br>
+      
+[**2. Analizador Léxico**](#analizador-léxico)
+<br>
+      
+[**3. Analizador Semántico**](#analizador-semántico)
+<br>
+
+- [**3.1 Tokens**](#tokens)  
+- [**3.2 Verify**](#verify)  
+- [**3.3 Automata**](#automata)  
+      
+[**4. Funcionalidad**](#funcionalidad)
+<br>
+
+- [**4.1 Grammar**](#grammar)  
+- [**4.2 Terminales**](#terminales)  
+- [**4.3 Reglas**](#reglas)  
+      
+[**5. Algoritmo**](#algoritmo)
+<br>
+
+- [**5.1 Ruby**](#ruby)  
+- [**5.2 Bash**](#bash)  
+- [**5.3 Javascript**](#javascript)  
+      
+[**6. Proceso de reconocimiento entre lenguajes**](#proceso-de-reconocimiento-entre-lenguajes)
+<br>
+
+- [**6.1 Obtención del texto**](#obtención-del-texto)  
+- [**6.2 Inicio**](#inicio)  
+- [**6.3 Método run()**](#método-run())  
+- [**6.4 Método Innerrun()**](#método-innerRun())  
+- [**6.5 Statement Creator**](#statement-creator)  
+
+[**7. Proceso de reconocimiento entre lenguajes**](#proceso-de-reconocimiento-entre-lenguajes)
+<br>
+      
+[**8. Clase Verify**](#clase-verify)
+<br>
+
+- [**8.1 Definición del método isWhatLanguage()**](#definición-del-método-isWhatLanguage())  
+- [**8.2 Métodos para verificar líneas**](#métodos-para-verificar-líneas)  
+      
+[**9. Clases Grammar**](#clase-verify)
+<br>
+
+- [**9.1 Métodos de validación**](#métodos-de-validación)  
+- [**9.2 Vista de expresiones regulares**](#vista-de-expresiones-regulares)  
+       
+[**10. Conclusiones**](#conclusiones)
+<br>
+      
+[**11. Bibliografía**](#bibliografía)
+<br>  
+<br>  
+<br>  
+<br>  
+  
 # Introducción
 
-# Interprete de Lenguaje LRI (Language Recognizer and Interpreted)
+# Interprete de Lenguaje LRI
+ 
+Derivado de su acrónimo *Language Recognizer and Interpreted* 
 
 El interprete de lenguaje LRI cuenta con los siguientes comandos:
 
@@ -16,6 +80,12 @@ El interprete de lenguaje LRI cuenta con los siguientes comandos:
 - **--exec [Program.lng]**: Ejecuta el programa ingresado el cual pasa por el analizador léxico, sintáctico y semántio.
 
 - **--help**: Muestra los comandos soportados por el interprete.
+
+
+
+
+
+
 
 
 # Analizador Léxico
@@ -487,7 +557,7 @@ self.language = self.verify.isWhatLanguage(line)
 
 Esta clase contiene todos los métodos necesarios para realizar las verificaciones de los componentes utilizados en el proceso de reconocimiento
 
-## definición del método verify.isWhatLanguage()
+## definición del método isWhatLanguage()
 Este método se encarga de reconocer el lenguaje, a partir de los siguientes casos
 - si la línea actual es una apertura de flujo o una declaración perteneciente a la gramática de bash y es una apertura de flujo o una declaración perteneciente a la gramática de ruby, retorna el valor 4
 - si la línea actual es una apertura de flujo o una declaración perteneciente a la gramática de javascript retorna el valor 1
@@ -526,7 +596,7 @@ def isWhatLanguage(self, line):
         return 3
 ```
 
-## Métodos para verificar linea
+## Métodos para verificar lineas
 Estos métodos reciben como parámetro una línea y el lenguaje actualmente identificado y dependiendo del lenguaje se realizan los respectivos llamados a los métodos encargados de las validaciones de cada gramática del lenguaje.
 
 Estos métodos son:
@@ -561,7 +631,7 @@ Estos métodos son:
 - ``` python 
   verify.isChangeFlow(line, language) 
   ```
-# Clases Grammar
+# Clase Grammar
 
 en estas clases se definen las gramatica específica de cada lenguaje y contienen los metodos de validacion para JavaScrip, Bash y Ruby
 
@@ -591,3 +661,23 @@ def printRe(self):
 def getRe(self):
     return self.intAssignment
 ```
+
+
+# Conclusiones
+
+# Bibliografía
+
+[1] M. Alfonseca, M. Cruz Echeandía, A. Ortega de la Puente and E. Pulido Cañabate, *Compiladores e intérpretes*.   
+Madrid: Pearson Prentice Hall, 2006, pp. 12, 21, 76, 319.
+
+[2] J. Hopcroft, J. Ullman, R. Motwani and S. Vuelapluma, *Introducción a la teoría de autómatas, lenguajes y computación*.  
+Madrid: Pearson Educación, 2010, pp. 57, 58, 92, 145, 167.
+
+[3] Sebesta, R., 2016. *Concepts Of Programming Languages*.  
+11th ed. Edinburgh Gate: Pearson Education Limited 2016.  
+
+[4] E. Shinan, "lark-parser/lark", *GitHub*, 2017. [Online].
+Available: https://github.com/lark-parser/lark. [Accessed: 9- Aug- 2020].
+
+[5] E. Shinan, "Welcome to Lark’s documentation! — Lark documentation", *Lark-parser.readthedocs.io*, 2020. [Online].  
+Available: https://lark-parser.readthedocs.io/en/latest/. [Accessed: 9- Aug- 2020].
