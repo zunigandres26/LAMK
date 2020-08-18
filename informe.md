@@ -1,3 +1,172 @@
+![](https://drive.google.com/uc?export=view&id=1UK3ofAZz0yaqMaX93yToOJCEela9zgK6)
+
+---
+# Introducción
+
+# Analizador Léxico
+
+El analizador Léxico es el encargado de verificar que todos los símbolos o caracteres en el archivo a leer sean válidos o que pertenezcan al lenguaje Javascript.
+
+## Tokens
+
+La clase Token es un TDA que contiene las siguientes características:
+
+- type: Se refiere a su tipo (string,parentesis,integer,etc.)
+- value: El valor del token (lexema).
+- formed: Hace referencia a si el token ha sido formado completamente o no.
+- inFormation: Hace referencia a si el token está en formación.
+
+## Verify
+
+La clase verify contiene el código necesario para verificar el tipo del token. 
+
+Esta clase utiliza rangos ASCII para verificar los valores de los tokens, de esa manera se puede verificar si un caracter es un punto, un dígito, una cadena, etc. 
+
+Verify tambien contiene un diccionario con las palabras reservadas del lenguaje Javascript, e.g.: console.log, if, while, etc.
+
+Los caracteres soportados para este proyecto se muestran en la siguiente tabla: 
+
+> ![](https://drive.google.com/uc?export=view&id=13nP6vphe0IS-LtJCBz6FTHfBDYbqF3kN)
+
+## Automata
+
+La clase Automata es el núcleo del analizador Léxico, esta clase recorre caracter a caracter todo el código contenido en el archivo y contiene la lógica de todos los posibles casos de entrada de datos.
+
+# Analizador Semántico
+
+La semántica es la parte de la lingüistica que estudia el significado de las expresiones lingüisticas.
+
+
+El analizador semático interpreta el código (le da un significado) y muestra un resultado en consola.
+
+
+Contiene la gramática escrita en Lark y sus funciones o alias para Interpretar el lenguaje.
+
+## Grammar
+
+La gramática permite reconocer las posibles entradas válidas para el lenguaje de Javascript.
+
+Por ejemplo: 
+
+```javascript
+a = "Hola Mundo";
+```
+La línea anterior será reconocida por la siguiente gramática de lark:
+
+```python
+?assignment: var "=" string ";"?
+
+?var: /[a-zA-Z]\w*/
+
+?string: /"[^"]*"/
+        | /'[^']*'/
+```
+
+Las gramáticas en Lark utilizan notación **EBNF** (Extended Backus-Naur Form) para escribir una gramática.
+
+### Terminales
+Los terminales en Lark pueden ser:
+
+- "console": Literales.
+-  /\d+/: Expresiones Regulares.
+  
+  *Las Expresiones Regulares pueden contener banderas e.g.: /RegEx/ i
+
+### Reglas
+
+Las reglas en Lark comienzan con un signo de interrogación cerrado ( ? ) o un signo de admiración cerrado ( ! ), la diferencia tiene que ver en como Lark genera el árbol, ' **?** ' Ignora terminales literales y ' **!** ' No lo hace. 
+
+Las reglas y los alias en Lark deben de estar escritos en minúscula.
+
+Las reglas soportan pueden utilizar operadores como OR ( | ), * (Cero o más), + (Uno o más), ? (Puede o no ser necesario).
+
+---
+
+Para este proyecto se ha creado una gramática que reconoce las siguientes sentencias:
+
+- Impresiones en consola de cadenas de la forma:
+    ```javascript
+    console.log("Esto es un mensaje");
+    console.error("Esto es otro mensaje");
+    ```
+
+- Impresiones en consola de variables:
+    ```javascript
+    console.log(a);
+    console.error(helloMsg);
+    ```
+
+- Declaración de Variables:
+    ```javascript
+    a = 10.5; //Valores Numéricos
+
+    b = a+5*(50/6) // Operaciones Aritméticas
+
+    helloMsg = "Bienvenido"; // Cadenas
+
+    isCorrect = true //Booleanos
+
+    soul = null // Nulo o vacío
+    ```
+
+- Ciclos For
+    ```javascript
+    for(i=0; i<10; i++){ statements }
+
+    x = 100;
+    for(x; x>=10; i--){ statements }
+    ```
+
+- Condiciones If
+    ```javascript
+    if(10>5) console.log("El número es mayor");
+
+    if(x<10){
+        statements
+    }
+
+    if(x>=100){
+        statements
+    }else{
+        statements
+    }
+    ```
+
+- Ciclos While
+    ```javascript
+    while(i<10){
+        statements
+    }
+
+    t = true
+    while(t){
+        statements
+    }
+    ```
+
+- Funciones
+    ```javascript
+    function menorMayor (n,m){
+        if (n<m){
+            console.log("El número es menor")
+        }else{
+            console.error("El número es mayor")
+        }
+    }
+    ```
+## Semantic
+
+La clase semantic contiene todos los alias definidos en la gramática y es donde se Interpreta el código de Javascript por medio de Python.
+
+El objetivo es crear funciones que simulen la funcionalidad de las sentencias descritas anteriormente mediante Python. De esta manera un ciclo For en Javascript puede ser "traducido" a su equivalente en Python, esto se logra gracias a Lark.
+
+Las funciones reciben cuantos parámetros han sido declarados en la gramática y en el caso de los ciclos for, while, condiciones If, y declaración de funciones se reciben cuantas sentencias se encuentren dentro de ellos. 
+
+Lark envía estas sentencias múltiples como un árbol de tipo Lark, el cual es parseado a una lista para posteriormente clasificar y ejecutar las funciones correspondientes en python.
+
+Los árboles de tipo Lark cuentan con el **[método pretty](https://lark-parser.readthedocs.io/en/stable/classes/)** el cual devuelve un equivalente del árbol en forma de texto el cual es posteriormente almacenado en una lista para poder ser analizado.
+
+
 # Funcionalidad 
  
 De forma general el módulo de reconocimiento del programa se encarga de identificar los patrones de determinados lenguajes para analizar su sintaxis con el fin de reconocer a qué lenguaje de Programación pertenece 

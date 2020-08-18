@@ -31,13 +31,13 @@ class TabView:
                 print("Opcion invalida, acaso eres tonto?")
 
     def printLexic(self, array):        
-        print("Lexic Tabled ")
-        print(tabulate(array, headers=["Lexema","Token"]))
+        print("1. Lexic Table ")
+        print(tabulate(array, headers=["Lexema","Token"], showindex="always", tablefmt="fancy_grid"))
     
     def printSintactic(self, array):        
-        print("Sintatic Tabled ")
-        print(tabulate(array, headers=["Statement","Type"]))
+        print("2. Sintatic Tabled ")
+        print(tabulate(array, headers=["Statement","Type"], showindex="always", tablefmt="fancy_grid"))
     
     def printSemantic(self, array):        
-        print("Semantic Tabled ")
-        print(tabulate(array, headers=["Input","Value"]))
+        print("3. Semantic Tabled ")
+        print(tabulate(array, headers=["Input","Value"], showindex="always", tablefmt="fancy_grid"))
