@@ -20,7 +20,6 @@ class execute:
 
     def __init__(self, parameters):
         self.parameters = parameters
-        
 
     def run(self):
         if len(self.parameters) > 1:
@@ -51,7 +50,16 @@ class execute:
     def exec(self, filename):
         reader = (Reader()).reader(filename)
         automata = (Automata(reader)).run()
-        sintactic = (SyntaxAnalyzer(reader).run())
+
+        #sintactic = (SyntaxAnalyzer(reader).run())
+
+        parser = Lark(grammar,parser="lalr",lexer="contextual",transformer = Semantic())
+        language = parser.parse
+
+        try:
+            language(reader.text)
+        except Exception as e:
+            print ("Error: %s" % e)
 
 
     def recognize(self, filename):
@@ -64,7 +72,7 @@ class execute:
         print("Alex aun nada sabe de python")
 
     def help(self):
-        print("comandos soportados\n")
+        print("Bienvenido a la utilidad de ayuda de LIR 1.0\n")
         print("Ejecutar el programa                  --exec fileName")
         print("Muestra la tabla de simbolos          --tabview fileName")
         print("Muestra la tabla de simbolos          --recognize fileName")
@@ -73,7 +81,7 @@ class execute:
     
     def info(self):
         print("*"*45)
-        print("* Interprete:", " "*29, "*\n*"," "*41, "*")
+        print("* Interprete LRI", " "*26, "*\n*"," "*41, "*")
         print("* @author Alexis Daniel Ochoa   20161002139 *")
         print("* @author Andres Alberto Zuniga 20161003850 *")
         print("* @author Marco Tulio Ruiz      20171006559 *")

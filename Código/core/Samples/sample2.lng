@@ -8,7 +8,7 @@ g = 0;
 
 test = "Hola Maldito Mundo";
 
-//test.length;
+test.length;
 
 noSeVaAPoder = a + 10;
 console.log(noSeVaAPoder)
@@ -53,7 +53,7 @@ function factorial (n){
     console.error(void1);
     console.log(void2);
 
-    //if (n<60) console.error("Funciona el If de una línea dentro de funciones")
+    if (n<60) console.error("Funciona el If de una línea dentro de funciones")
 
     if (n<60){
         console.log("El número es menor")
