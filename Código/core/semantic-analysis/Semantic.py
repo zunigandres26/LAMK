@@ -154,8 +154,10 @@ class Semantic(Transformer):
             @param name: Nombre de la variable.
             @return string: valor de la variable.
         """
-    def getvar(self,name):    
-        return str(self.variables[str(name)])
+    def getvar(self,name):
+        if (self.variables[str(name)]):
+            return str(self.variables[str(name)])
+
 
     # forfunction
         """

@@ -1,84 +1,68 @@
-a = 11;
-b = "MATADME PORFAVOR"
-c = null
-d = true;
-e = true;
-z = 10+7*5-a/(70-67)
-g = 0;
 
-test = "Hola Maldito Mundo";
+stock = 100;
 
-test.length;
+// function isInStock
+function isInStock(n){
+    if (n<stock){
+        console.log("Hay en Stock!");
+    }else{
+        console.error("No hay en Stock!")
+    }
+}
 
-noSeVaAPoder = a + 10;
-console.log(noSeVaAPoder)
-console.log(a)
-console.log(b);
-console.log(c)
-console.log(d)
-console.log(e)
-console.error(z)
+v@riable = false;
 
+msg = "Hola!"
+function sayHey(){
+    console.log(msg)
+}
+
+sayHey();
+
+isInStock(90);
+
+isInStock(101);
+
+console.log("Números del 0 al 9 por medio de un ciclo For")
+console.log("");
 
 for (i=0;i<10;i++){
-    console.log("Maldición, Funciona!")
-    g = 10 + i;
-    console.log(g)
+    console.log(i)
 }
 
-if (a<=10) {
-    a=10+(30-5)/3*7;
-    console.error(a);
-}else{
-    console.log("")
-    console.log("Joder")
+console.log("")
+console.log("Se realizan operaciones aritméticas dentro de un While:")
+console.log("");
+j = 0
+while(j<stock){
+    j = j+7*(5/2);
 }
 
-u=0
+console.log("")
+console.error("El valor de j es: ")
+console.error(j);
+console.log("")
 
-while(u<=10){
-    console.error("F")
-    u = u +1
-}
-
-function factorial (n,m){
-
-    x = 10+5*6/8+a;
-    y = "Hola Mundo"
-    void1 = true;
-    void2 = null
-    
-    console.error(x)
-    console.log(y)
-    console.error(void1);
-    console.log(void2);
-    /*
-    if (n<60) console.error("Funciona el If de una línea dentro de funciones")
 /*
-    if(n<80){
-        console.log("El número es menor")
-        a = 89*7676/90*(x+90)
-        console.error(a)
-    }else{
-        console.error("El número es mayor")
-    
-    }*/
-     
-}
+    Length de distitos tipos de variable
+*/
 
+w = null;
+x = true;
+y = 4534543;
+z = "Bienvenido al Interprete LIR!"
 
+console.log(w)
+w.length;
+console.log("")
 
-function prueba (){
-    console.log("JODEEEEERRRR")
-    /*
-}
-}
-    */
-}
+console.log(x)
+x.length;
+console.log("")
 
+console.log(y)
+y.length;
+console.log("")
 
-factorial(10,20);
-factorial(0,78)
-
-
-prueba();
+console.log(z)
+z.length;

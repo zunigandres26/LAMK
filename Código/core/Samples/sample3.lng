@@ -32,7 +32,7 @@ console.log("")
 console.log("Se realizan operaciones aritméticas dentro de un While:")
 console.log("");
 j = 0
-while(j<stock){
+while( j<stock {
     j = j+7*(5/2);
 }
 
