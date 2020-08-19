@@ -61,11 +61,31 @@
 [**10. Bibliografía**](#10.-bibliografía)
 <br>  
 <br>  
-<br>  
-<br>  
   
 # Introducción
 
+El presente informe responde a cuestiones simples sobre la mecánica y funcionalidad del proyecto, un intérprete utilizando Python, Lark y Automatas Finitos con funcionalidades 
+
+de Lenguajes de Programación. <br><br>
+
+Tres son los componentes esenciales: 
+
+1. Interpretación 
+2. Demostración 
+3. Reconocimiento
+
+El último componente primer componente permite reconocer el lenguaje de programación de un software, mediante un [parámetro](#1.-interprete-de-lenguaje-lri) escrito en forma de 
+
+comando, es gramatical. 
+
+Los lenguajes comprendidos son *Ruby, Bash*. <br> 
+
+Reconoce instrucciones básicas:
+
+- Comentarios simples o múltiples.
+- Asignaciones (cadenas, booleanos, números, nulo).
+- Declaración y ejecución de funciones.
+- Estructuras de control de flujo (if, while, for).
 
 
 # 1. Interprete de Lenguaje LRI
@@ -87,13 +107,23 @@ El interprete de lenguaje LRI cuenta con los siguientes comandos:
 
 
 
-
-
-
-
 # 2. Analizador Léxico
 
-El analizador Léxico es el encargado de verificar que todos los símbolos o caracteres en el archivo a leer sean válidos o que pertenezcan al lenguaje Javascript.
+Este, se encarga de dividir el programa fuente en un conjunto de unidades sintácticas. <br>
+
+Una unidad sintáctica es una secuencia de caracteres con cohesión lógica. (identificadores, palabras reservadas, los símbolos simples o múltiples y constantes numéricas o 
+
+literales).<br>
+
+Para llevar a cabo esta división del programa en unidades sintácticas, el analizador utiliza un subconjunto de las reglas de la gramática del lenguaje en el que está 
+
+escrito el programa que se va a compilar. Este subconjunto de reglas corresponde a una gramatica. 
+
+El analizador léxico lleva a cabo también otra serie de tareas auxiliares como el tratamiento de los comentarios y la eliminación de blancos y símbolos especiales 
+
+(caracteres de tabulación y saltos de línea, entre otros).
+
+Un analizador léxico es un autómata finito determinista que reconoce el lenguaje generado por las expresiones regulares correspondientes a las unidades sintácticas del lenguaje fuente.
 
 ## 2.1 Tokens
 
