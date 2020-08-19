@@ -3,61 +3,62 @@
 ---
 # Índice
 
-[**1. Interprete de Lenguaje LRI**](#interprete-de-lenguaje-lri)
-<br>
-      
-[**2. Analizador Léxico**](#analizador-léxico)
-<br>
-      
-[**3. Analizador Semántico**](#analizador-semántico)
+[**Introducción**](#introducción)
 <br>
 
-- [**3.1 Tokens**](#tokens)  
-- [**3.2 Verify**](#verify)  
-- [**3.3 Automata**](#automata)  
-      
-[**4. Funcionalidad**](#funcionalidad)
-<br>
-
-- [**4.1 Grammar**](#grammar)  
-- [**4.2 Terminales**](#terminales)  
-- [**4.3 Reglas**](#reglas)  
-      
-[**5. Algoritmo**](#algoritmo)
-<br>
-
-- [**5.1 Ruby**](#ruby)  
-- [**5.2 Bash**](#bash)  
-- [**5.3 Javascript**](#javascript)  
-      
-[**6. Proceso de reconocimiento entre lenguajes**](#proceso-de-reconocimiento-entre-lenguajes)
-<br>
-
-- [**6.1 Obtención del texto**](#obtención-del-texto)  
-- [**6.2 Inicio**](#inicio)  
-- [**6.3 Método run()**](#método-run())  
-- [**6.4 Método Innerrun()**](#método-innerRun())  
-- [**6.5 Statement Creator**](#statement-creator)  
-
-[**7. Proceso de reconocimiento entre lenguajes**](#proceso-de-reconocimiento-entre-lenguajes)
+[**1. Interprete de Lenguaje LRI**](#1.-interprete-de-lenguaje-lri)
 <br>
       
-[**8. Clase Verify**](#clase-verify)
+[**2. Analizador Léxico**](#2.-analizador-léxico)
 <br>
-
-- [**8.1 Definición del método isWhatLanguage()**](#definición-del-método-isWhatLanguage())  
-- [**8.2 Métodos para verificar líneas**](#métodos-para-verificar-líneas)  
       
-[**9. Clases Grammar**](#clase-verify)
+- [**2.1 Tokens**](#2.1-tokens)  
+- [**2.2 Verify**](#2.2-verify)  
+- [**2.3 Automata**](#2.3-automata)  
+ 
+[**3. Analizador Semántico**](#3.-analizador-semántico)
 <br>
 
-- [**9.1 Métodos de validación**](#métodos-de-validación)  
-- [**9.2 Vista de expresiones regulares**](#vista-de-expresiones-regulares)  
+- [**3.1 Grammar**](#3.1-grammar)  
+- [**3.2 Terminales**](#3.2-terminales)  
+- [**3.3 Reglas**](#3.3-reglas)
+- [**3.4 Semantic**](#3.4-semantic)
+      
+[**4. Funcionalidad**](#4.-funcionalidad)
+<br>
+
+- [**4.1 Ruby**](#4.1-ruby)  
+- [**4.2 Bash**](#4.2-bash)  
+- [**4.3 Javascript**](#4.3-javascript)    
+      
+[**5. Algoritmo**](#5.-algoritmo)
+<br>
+
+- [**5.1 Obtención del texto**](#5.1-obtención-del-texto)  
+- [**5.2 Inicio**](#5.2-inicio)  
+- [**5.3 Método run()**](#5.3-método-run())  
+- [**5.4 Método Innerrun()**](#5.4-método-innerRun())  
+- [**5.5 Statement Creator**](#5.5-statement-creator)  
+      
+[**6. Proceso de reconocimiento entre lenguajes**](#6.-proceso-de-reconocimiento-entre-lenguajes)
+<br>
+
+[**7. Clase Verify**](#7.-clase-verify)
+<br>
+
+- [**7.1 Definición del método isWhatLanguage()**](#7.1-definición-del-método-isWhatLanguage())  
+- [**7.2 Métodos para verificar líneas**](#7.2-métodos-para-verificar-líneas)  
+      
+[**8. Clases Grammar**](#8.-clase-verify)
+<br>
+
+- [**8.1 Métodos de validación**](#8.1-métodos-de-validación)  
+- [**8.2 Vista de expresiones regulares**](#8.2-vista-de-expresiones-regulares)  
        
-[**10. Conclusiones**](#conclusiones)
+[**9. Conclusiones**](#9.-conclusiones)
 <br>
       
-[**11. Bibliografía**](#bibliografía)
+[**10. Bibliografía**](#10.-bibliografía)
 <br>  
 <br>  
 <br>  
@@ -65,9 +66,11 @@
   
 # Introducción
 
-# Interprete de Lenguaje LRI
+
+
+# 1. Interprete de Lenguaje LRI
  
-Derivado de su acrónimo *Language Recognizer and Interpreted* 
+Derivado del acrónimo *Language Recognizer and Interpreted* 
 
 El interprete de lenguaje LRI cuenta con los siguientes comandos:
 
@@ -88,11 +91,11 @@ El interprete de lenguaje LRI cuenta con los siguientes comandos:
 
 
 
-# Analizador Léxico
+# 2. Analizador Léxico
 
 El analizador Léxico es el encargado de verificar que todos los símbolos o caracteres en el archivo a leer sean válidos o que pertenezcan al lenguaje Javascript.
 
-## Tokens
+## 2.1 Tokens
 
 La clase Token es un TDA que contiene las siguientes características:
 
@@ -101,7 +104,7 @@ La clase Token es un TDA que contiene las siguientes características:
 - formed: Hace referencia a si el token ha sido formado completamente o no.
 - inFormation: Hace referencia a si el token está en formación.
 
-## Verify
+## 2.2 Verify
 
 La clase verify contiene el código necesario para verificar el tipo del token. 
 
@@ -113,11 +116,11 @@ Los caracteres soportados para este proyecto se muestran en la siguiente tabla:
 
 > ![](https://drive.google.com/uc?export=view&id=13nP6vphe0IS-LtJCBz6FTHfBDYbqF3kN)
 
-## Automata
+## 2.3 Automata
 
 La clase Automata es el núcleo del analizador Léxico, esta clase recorre caracter a caracter todo el código contenido en el archivo y contiene la lógica de todos los posibles casos de entrada de datos.
 
-# Analizador Semántico
+# 3. Analizador Semántico
 
 La semántica es la parte de la lingüistica que estudia el significado de las expresiones lingüisticas.
 
@@ -127,7 +130,7 @@ El analizador semático interpreta el código (le da un significado) y muestra u
 
 Contiene la gramática escrita en Lark y sus funciones o alias para Interpretar el lenguaje.
 
-## Grammar
+## 3.1 Grammar
 
 La gramática permite reconocer las posibles entradas válidas para el lenguaje de Javascript.
 
@@ -149,7 +152,7 @@ La línea anterior será reconocida por la siguiente gramática de lark:
 
 Las gramáticas en Lark utilizan notación **EBNF** (Extended Backus-Naur Form) para escribir una gramática.
 
-### Terminales
+### 3.2 Terminales
 Los terminales en Lark pueden ser:
 
 - "console": Literales.
@@ -157,7 +160,7 @@ Los terminales en Lark pueden ser:
   
   *Las Expresiones Regulares pueden contener banderas e.g.: /RegEx/ i
 
-### Reglas
+### 3.3 Reglas
 
 Las reglas en Lark comienzan con un signo de interrogación cerrado ( ? ) o un signo de admiración cerrado ( ! ), la diferencia tiene que ver en como Lark genera el árbol, ' **?** ' Ignora terminales literales y ' **!** ' No lo hace. 
 
@@ -239,7 +242,7 @@ Para este proyecto se ha creado una gramática que reconoce las siguientes sente
         }
     }
     ```
-## Semantic
+## 3.4 Semantic
 
 La clase semantic contiene todos los alias definidos en la gramática y es donde se Interpreta el código de Javascript por medio de Python.
 
@@ -252,7 +255,7 @@ Lark envía estas sentencias múltiples como un árbol de tipo Lark, el cual es 
 Los árboles de tipo Lark cuentan con el **[método pretty](https://lark-parser.readthedocs.io/en/stable/classes/)** el cual devuelve un equivalente del árbol en forma de texto el cual es posteriormente almacenado en una lista para poder ser analizado.
 
 
-# Funcionalidad 
+# 4. Funcionalidad 
  
 De forma general el módulo de reconocimiento del programa se encarga de identificar los patrones de determinados lenguajes para analizar su sintaxis con el fin de reconocer a qué lenguaje de Programación pertenece 
 
@@ -266,7 +269,7 @@ Nuestro programa es capaz de analizar y reconocer los siguientes lenguajes de pr
 
 No se reconoce en totalidad toda la gramática del lenguaje por lo que a continuación se enumera las declaraciones que se es capaz de reconocer de cada lenguaje 
 
-### 1. Ruby 
+### 4.1 Ruby 
 - For
 ```Ruby
 for i in 0..5
@@ -332,7 +335,7 @@ Write as many line as you want.
 ```
 
 
-### 2. Bash 
+### 4.2 Bash 
 - Comentarios
 ```Bash
 # Esto es un comentario
@@ -378,7 +381,7 @@ while true; do
 	done
 done
 ```
-### 3. Javas Script
+### 4.3 Javas Script
 - Comentarios
 ```javascript
 # Esto es un comentario
@@ -420,17 +423,17 @@ while (true){
 }
 ```
 
-# Algoritmo
-## Obtención del texto 
+# 5. Algoritmo
+## 5.1 Obtención del texto 
 El texto es obtenido a partir un método estático **reader()** de la clase Reader el cual contiene una atributo **text** que representa el texto contenido en un archivo.
 
-## Inicio
+## 5.2 Inicio
 A partir de la clase SyntaxAnalizer que recibe como parámetro el texto y la cual contiene también un método **run()** el cual es invocado para comenzar el proceso de análisis.
 
-### Método run()
+### 5.3 Método run()
 primero toma el texto y lo separa por cada salto de línea, luego inicializa una variable firstLine representa la primera línea reconocida y una segunda variable lastLine que representa la última línea del texto, finalmente invocamos al método innerRun() enviado los parámetros que este requiere (firstLine: primera línea a identificar, lastLine: ultima linea a identificar, lines: el total de las líneas  contenidas)
 
-### Método innerRun()
+### 5.4 Método innerRun()
 Para comenzar cabe mencionar que este es un metodo recursivo y es invocado con parametros por defecto dentro del método run()
 
 Para comenzar inicializamos un statement vacío, dependiendo de los parámetros correrá una sentencia while; Este se encarga de validar que hacer con un statement analizado con las siguientes instrucciones
@@ -441,7 +444,7 @@ Para comenzar inicializamos un statement vacío, dependiendo de los parámetros 
 
 proseguirá a realizar un recorrido del flujo invocando a sí mismo de manera recursiva recibiendo como parámetro los números de línea del inicio y final del flujo. para mayor información leer la documentación del código
 
-### Statement Creator
+### 5.5 Statement Creator
 Este es un método cuya ejecución es determinada por la sentencia while descrita anteriormente en el método innerRun el cual recibe los siguientes parámetros
 - lines: todas las líneas en general
 - i: posición de la línea a analizar
@@ -538,7 +541,7 @@ statement.forClose -= 1
 ### si está analizado
 Se inicializa nuevamente la variable statement con un objeto Statement, se aumenta la posición de líneas y estas se retornan nuevamente en el ciclo de la sentencia while.
 
-# Proceso de reconocimiento entre lenguajes
+# 6. Proceso de reconocimiento entre lenguajes
 
 Este proceso se realiza dentro del llamado al método statementCreator, en donde si el objeto está en análisis y la variable global lenguaje está entre cero o tres donde
 - 0: representa el estado inicial 
@@ -553,11 +556,11 @@ y la línea actual no es un espacio en blanco, entonces ejecuta el método del o
 self.language = self.verify.isWhatLanguage(line)
 ```
 
-# Clase Verify
+# 7. Clase Verify
 
 Esta clase contiene todos los métodos necesarios para realizar las verificaciones de los componentes utilizados en el proceso de reconocimiento
 
-## definición del método isWhatLanguage()
+## 7.1 Definición del método isWhatLanguage()
 Este método se encarga de reconocer el lenguaje, a partir de los siguientes casos
 - si la línea actual es una apertura de flujo o una declaración perteneciente a la gramática de bash y es una apertura de flujo o una declaración perteneciente a la gramática de ruby, retorna el valor 4
 - si la línea actual es una apertura de flujo o una declaración perteneciente a la gramática de javascript retorna el valor 1
@@ -596,7 +599,7 @@ def isWhatLanguage(self, line):
         return 3
 ```
 
-## Métodos para verificar lineas
+## 7.2 Métodos para verificar lineas
 Estos métodos reciben como parámetro una línea y el lenguaje actualmente identificado y dependiendo del lenguaje se realizan los respectivos llamados a los métodos encargados de las validaciones de cada gramática del lenguaje.
 
 Estos métodos son:
@@ -631,11 +634,11 @@ Estos métodos son:
 - ``` python 
   verify.isChangeFlow(line, language) 
   ```
-# Clase Grammar
+# 8. Clase Grammar
 
 en estas clases se definen las gramatica específica de cada lenguaje y contienen los metodos de validacion para JavaScrip, Bash y Ruby
 
-## metodos de validacion 
+## 8.1 metodos de validacion 
 Estos métodos son utilizados para realizar la validación a partir de variables globales que representan a las expresiones regulares necesarias para este proceso; las cuales están formadas a partir de un proceso de concatenación 
 
 ```python
@@ -651,7 +654,7 @@ self.boolean = "(true|false)"
 self.intAssignment = ("\s*%s\s*=\s*%s\s*".strip() % (self.var, self.number)
 
 ```
-## Vista de Expresiones regulares
+## 8.2 Vista de Expresiones regulares
 para poder ver en consola una expresión regular completa hacemos uso del método de la clase Verify llamado **printRe()** el cual hace un llamado a un método de la gramática llamado **getRe()**
 ```python 
 def printRe(self):
@@ -663,9 +666,9 @@ def getRe(self):
 ```
 
 
-# Conclusiones
+# 9. Conclusiones
 
-# Bibliografía
+# 10. Bibliografía
 
 [1] M. Alfonseca, M. Cruz Echeandía, A. Ortega de la Puente and E. Pulido Cañabate, *Compiladores e intérpretes*.   
 Madrid: Pearson Prentice Hall, 2006, pp. 12, 21, 76, 319.
