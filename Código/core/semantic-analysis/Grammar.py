@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 
+"""
+    @author Alexis
+    @date 2020/08/16
+    @version 0.3    
+"""
+
 grammar = """
     ?start: exp+
 
