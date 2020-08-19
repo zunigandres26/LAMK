@@ -18,7 +18,7 @@ from tabulate import tabulate
 """
     La clase execute es la encargada de filtrar los parámetros y ejecutar las funciones correspondientes.
 """
-class execute:
+class run:
 
     """
         Constructor
@@ -31,7 +31,7 @@ class execute:
         La función run es la encargada de verificar la integridad de los parámetros y tomar una decisión
         de acuerdo a los parámetros enviados.
     """
-    def run(self):
+    def execute(self):
         if len(self.parameters) > 1:
             if len(self.parameters) == 3:                
                 if self.parameters[1] == "--exec":
