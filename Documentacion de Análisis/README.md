@@ -61,11 +61,41 @@
 [**10. Bibliografía**](#10.-bibliografía)
 <br>  
 <br>  
-<br>  
-<br>  
   
 # Introducción
 
+El presente informe responde a cuestiones simples sobre la mecánica y funcionalidad del proyecto, un intérprete utilizando Python, Lark y Automatas Finitos con funcionalidades 
+de Lenguajes de Programación. <br><br>
+
+Tres son los componentes esenciales: 
+
+1. Interpretación 
+2. Demostración 
+3. Reconocimiento
+
+
+El primer componente permite ejecutar léxica, semántica y sintácticamente el lenguaje Javascript limitado a algunos tipos de instrucción:
+
+- Comentarios simples o múltiples.
+- Asignaciones (cadenas, booleanos, números, nulo).
+- Comparaciones simples (==, <, >, <=, >=) 
+- Declaración y ejecución de funciones de hasta 2 parámetros (sin parámetros por defecto) 
+- Estructuras de control (if, while, for)
+- Generación de mensajes de salida (console.log y console.error)
+
+El componente de *Demostración* permite imprimir la tabla de símbolos generada internamente para la ejecución, con la información al final de la ejecución. 
+
+El último componente permite reconocer el lenguaje de programación de un software, mediante un [parámetro](#1.-interprete-de-lenguaje-lri) escrito en forma de 
+comando. 
+
+Los lenguajes comprendidos son *Ruby, Bash*. <br> 
+
+Reconoce instrucciones básicas:
+
+- Comentarios simples o múltiples.
+- Asignaciones (cadenas, booleanos, números, nulo).
+- Declaración y ejecución de funciones.
+- Estructuras de control de flujo (if, while, for).
 
 
 # 1. Interprete de Lenguaje LRI
@@ -74,26 +104,34 @@ Derivado del acrónimo *Language Recognizer and Interpreted*
 
 El interprete de lenguaje LRI cuenta con los siguientes comandos:
 
-- **--info**: Muestra la información sobre la versión y los autores del Interprete.
-
-- **--tabview [Program.lng]**: Muestra en consola la tabla de símbolos generados durante la ejecución del programa.
-
-- **--recognize [Program.lng]**: Reconoce el lenguaje en el que esta escrito el programa. Los lenguajes soportados son Javascript, Ruby y Bash.
-
-- **--exec [Program.lng]**: Ejecuta el programa ingresado el cual pasa por el analizador léxico, sintáctico y semántio.
-
-- **--help**: Muestra los comandos soportados por el interprete.
-
-
-
-
-
+| Comando                   | Descripción                                                                                                    |
+|---------------------------|----------------------------------------------------------------------------------------------------------------|
+| --info                    | Muestra la información sobre la versión y los autores del Interprete.                                          |
+| --tabview [Program.lng]   | Muestra en consola la tabla de símbolos generados durante la ejecución del programa                            |
+| --recognize [Program.lng] | Reconoce el lenguaje en el que esta escrito el programa. Los lenguajes soportados son Javascript, Ruby y Bash. |
+| --exec [Program.lng]      | Ejecuta el programa ingresado el cual pasa por el analizador léxico, sintáctico y semántio.                    |
+| --help                    | Muestra los comandos soportados por el interprete.                                                             | 
+Tabla 1.1
 
 
 
 # 2. Analizador Léxico
 
-El analizador Léxico es el encargado de verificar que todos los símbolos o caracteres en el archivo a leer sean válidos o que pertenezcan al lenguaje Javascript.
+Este, se encarga de dividir el programa fuente en un conjunto de unidades sintácticas. <br>
+
+Una unidad sintáctica es una secuencia de caracteres con cohesión lógica. (identificadores, palabras reservadas, los símbolos simples o múltiples y constantes numéricas o 
+
+literales).<br>
+
+Para llevar a cabo esta división del programa en unidades sintácticas, el analizador utiliza un subconjunto de las reglas de la gramática del lenguaje en el que está 
+
+escrito el programa que se va a compilar. Este subconjunto de reglas corresponde a una gramatica. 
+
+El analizador léxico lleva a cabo también otra serie de tareas auxiliares como el tratamiento de los comentarios y la eliminación de blancos y símbolos especiales 
+
+(caracteres de tabulación y saltos de línea, entre otros).
+
+Un analizador léxico es un autómata finito determinista que reconoce el lenguaje generado por las expresiones regulares correspondientes a las unidades sintácticas del lenguaje fuente.
 
 ## 2.1 Tokens
 
@@ -122,13 +160,13 @@ La clase Automata es el núcleo del analizador Léxico, esta clase recorre carac
 
 # 3. Analizador Semántico
 
-La semántica es la parte de la lingüistica que estudia el significado de las expresiones lingüisticas.
+El análisis semántico es la fase del compilador en la que se comprueba la corrección semántica del programa.
 
+El analizador semántico es la parte del compilador que realiza el análisis semántico. Suele estar
+compuesto por un conjunto de subrutinas independientes, que pueden ser invocadas por los analizadores léxico y sintáctico.
 
-El analizador semático interpreta el código (le da un significado) y muestra un resultado en consola.
+Este contiene la gramática escrita en Lark y sus funciones para interpretar el lenguaje.
 
-
-Contiene la gramática escrita en Lark y sus funciones o alias para Interpretar el lenguaje.
 
 ## 3.1 Grammar
 
@@ -667,6 +705,15 @@ def getRe(self):
 
 
 # 9. Conclusiones
+
+Podemos realizar anotaciones que pueden ser usadas para comprobar que el programa es semánticamente correcto, 
+Cuando se utiliza un identificador, éste ha sido declarado previamente.
+
+• Se ha asignado valor a las variables antes de su uso.
+• En las expresiones aritméticas, los operandos respetan las reglas sobre los tipos de datos
+permitidos por los operadores.
+• Cuando se invoca un procedimiento, éste ha sido declarado adecuadamente. Además, el número, tipo y posición de cada uno de sus argumentos debe ser compatible con la declaración.
+
 
 # 10. Bibliografía
 
